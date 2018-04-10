@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyh.p2p.dao.ApplicationDao">
+	
+	<select id="list" parameterType="Map" resultType="com.wyh.p2p.entities.Application">
+		SELECT 
+			a.FID id,
+			a.FCUSTOMER_ID customerId,
+			t.FNAME name,
+			a.FMONTY money,
+			a.FDAY day,
+			a.FINTEREST_RATE interestRate,
+			a.FOVERDEU_INTEREST_RATE overdueInterestRate,
+			a.FAPPLY_DATE applyDate,
+			a.FSTAGE_COUNT stageCount,
+			<if test="statue == 1">
+				a.FREASON_ORDINARY reason,  
+			</if>
+			<if test="statue == 0">
+				a.FREASON_SUPER reason,  
+			</if>
+			<if test="statue == 2">
+				a.FREASON_FINANCE reason,  
+			</if>
+			a.FAPPROVAL_DATE_FINANCE approvalDateFinance,
+			a.FAPPROVAL_DATE_ORDINARY approvalDateOrdinary,
+			a.FAPPROVAL_DATE_SUPER approvalDateSuper,
+			a.FAPPROVAL_ORDINARY approvalOrdinary,
+			a.FAPPROVAL_SUPER approvalSuper,
+			a.FRELEASE releaseA,  
+			ad.FNAME approvalName
+		FROM 
+			t_application a 
+		LEFT JOIN 
+			t_admin ad
+		ON 
+		<if test="statue == 1">
+			a.FAPPROVER_ID_ORDINARY = ad.FID 
+		</if>
+		<if test="statue == 0">
+			a.FAPPROVER_ID_SUPER = ad.FID 
+		</if>
+		<if test="statue == 2">
+			a.FAPPROVER_ID_FINANCE = ad.FID 
+		</if>
+		
+		LEFT JOIN 
+			t_customer t 
+		ON a.FCUSTOMER_ID=t.FID 
+		
+		WHERE 0=0 
+		<if test="statue == 0">
+			AND
+			a.FAPPROVAL_ORDINARY = 1 
+		</if>
+		<if test="statue == 2">
+			AND
+			a.FAPPROVAL_SUPER = 1 
+		</if>
+		
+		ORDER BY
+		<if test="statue == 1">
+			a.FAPPROVAL_ORDINARY
+		</if>
+		<if test="statue == 0">
+			a.FAPPROVAL_SUPER 
+		</if>
+		<if test="statue == 2">
+			a.FRELEASE
+		</if>
+		DESC   
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+		
+	</select>
+	
+	<select id="getTotle"  parameterType="Map" resultType="Long">
+		SELECT 
+			COUNT(FID) 
+		FROM 
+			T_APPLICATION
+			
+		WHERE 0=0 
+		<if test="statue == 0">
+			AND
+			FAPPROVAL_ORDINARY = 1 
+		</if>
+		<if test="statue == 2">
+			AND
+			FAPPROVAL_SUPER = 1 
+		</if>
+	</select>
+	
+	
+	<update id="approval" parameterType="Map">
+		UPDATE T_APPLICATION
+		<set>
+			<if test="statue == 1">
+				FAPPROVER_ID_ORDINARY=#{adminId},
+				FAPPROVAL_ORDINARY=#{approvalStatue},
+				FAPPROVAL_DATE_ORDINARY=NOW(),
+				FREASON_ORDINARY=#{reason}
+			</if>
+			<if test="statue == 0">
+				FAPPROVER_ID_SUPER=#{adminId},
+				FAPPROVAL_SUPER=#{approvalStatue},
+				FAPPROVAL_DATE_SUPER=NOW(),
+				FREASON_SUPER=#{reason}
+			</if>
+			<if test="statue == 2">
+				FAPPROVER_ID_FINANCE=#{adminId},
+				FRELEASE=#{approvalStatue},
+				FAPPROVAL_DATE_FINANCE=NOW(),
+				FREASON_FINANCE=#{reason} 
+			</if>
+		</set>
+		WHERE FID=#{id}
+	</update>
+	
+	<insert id="add">
+		INSERT INTO
+			T_APPLICATION
+			(FCUSTOMER_ID,FMONTY,FDAY,FINTEREST_RATE,FOVERDEU_INTEREST_RATE,FAPPLY_DATE,FSTAGE_COUNT) 
+		VALUES
+			(#{customerId},#{money},#{day},#{interestRate},#{overdueInterestRate},NOW(),#{stageCount})
+	</insert>
+	
+	<select id="getTotleMoney" resultType="Integer">
+		SELECT 
+			SUM(FMONTY) 
+		FROM 
+			t_application 
+		WHERE 
+			FCUSTOMER_ID=#{id} 
+		AND 
+			FRELEASE=1
+	</select>
+	
+	<select id="loanNum" parameterType="Map"  resultType="Integer">
+		SELECT 
+			COUNT(FID) 
+		FROM 
+			t_application 
+		WHERE 
+			FCUSTOMER_ID=#{id} 
+		<if test="success == 1">
+			AND 
+			FRELEASE=1
+		</if>
+		
+	</select>
+	
+	<select id="loanList" parameterType="Map" resultType="com.wyh.p2p.entities.Application">
+		SELECT 
+			FID id,
+			FMONTY money,
+			FDAY day,
+			FINTEREST_RATE interestRate,
+			FAPPLY_DATE applyDate,
+			FRELEASE releaseA,
+			FAPPROVAL_SUPER approvalSuper,
+			FAPPROVAL_ORDINARY approvalOrdinary
+		FROM 
+			t_application
+		WHERE 
+			FCUSTOMER_ID=#{id}
+		ORDER BY
+			FAPPLY_DATE
+		DESC   
+		 
+	</select>
+</mapper> 

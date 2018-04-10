@@ -1,0 +1,190 @@
+.m-footer, .m-head, .m-nav, .m-page {
+    min-width: 1200px
+}
+.m-footer .more .links li, .speedy-buoy li .m-tip .tel .text {
+    text-align: left;
+    float: left
+}
+
+.m-footer {
+    margin-top: 30px
+}
+
+.m-footer .more {
+    background: #333;
+    height: 230px;
+    padding-top: 30px;
+    color: #ccc;
+    font-size: 12px
+}
+
+.m-footer .more .site-win {
+    overflow: hidden
+}
+
+.m-footer .more .links {
+    float: left
+}
+
+.m-footer .more .links li {
+    width: 145px
+}
+
+.m-footer .more .links li p {
+    font-size: 14px;
+    color: #ccc;
+    display: block
+}
+
+.m-footer .more .links li a {
+    color: #9b9b9b;
+    font-size: 12px;
+    display: block;
+    margin-top: 10px
+}
+
+.m-footer .more .spread {
+    float: left;
+    border-left: 1px solid #484848;
+    border-right: 1px solid #484848;
+    padding: 0 60px
+}
+
+.m-footer .more .spread .app, .m-footer .more .spread .weixin {
+    float: left;
+    text-align: center
+}
+
+.m-footer .more .spread .weixin {
+    margin-left: 20%;
+}
+
+.m-footer .more .spread p {
+    font-size: 14px;
+    margin-bottom: 15px
+}
+
+.m-footer .more .spread div p {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px
+}
+
+.m-footer .more .spread img {
+    width: 100px;
+    height: 100px
+}
+
+.m-footer .more .contact {
+    width: 385px;
+    margin-left: 35px;
+    float: left
+}
+
+.m-footer .more .contact p {
+    margin-bottom: 5px;
+    color: #666
+}
+
+.m-footer .more .contact .c-aaa {
+    color: #aaa
+}
+
+.m-footer .more .contact .tel {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #484848;
+    display: block;
+    margin-bottom: 20px;
+    color: #aaa;
+    font-size: 36px;
+    cursor: default
+}
+
+.m-footer .more .contact .tel .icon {
+    margin-right: 10px;
+    float: left;
+    margin-top: 10px
+}
+
+.m-footer .more .contact .tel p {
+    font-size: 14px;
+    color: #ccc;
+    margin: 0
+}
+
+.m-footer .official {
+    background: #292929;
+    height: 96px;
+    text-align: center;
+    overflow: hidden
+}
+
+.m-footer .official a {
+    margin: 25px 16px;
+    display: inline-block;
+    zoom: 1
+}
+
+.m-footer .official a img {
+    display: none
+}
+.m-footer, .m-head, .m-nav, .m-page {
+    min-width: 1200px
+}
+
+
+.speedy-buoy li .m-tip .qq-view a .more {
+    margin-left: 5px
+}
+
+.site-win {
+    width: 1200px;
+    margin: 0 auto
+}
+.clearfix, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+    display: block
+}
+.clearfix {
+    zoom: 1
+}
+
+* html .clearfix {
+    height: 100%;
+    zoom: 1
+}
+.clearfix:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    line-height: 0
+}
+
+.speedy-buoy li .m-tip .tel {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-right: 40px
+}
+
+.speedy-buoy li .m-tip .tel .text p {
+    font-size: 14px;
+    color: #ccc
+}
+
+.speedy-buoy li .m-tip .tel .text b {
+    font-size: 26px;
+    color: #f60
+}
+
+.speedy-buoy li .m-tip .tel .icon {
+    float: left;
+    margin-right: 10px
+}
+.announcement-float .text {
+     font-size: 14px;
+     line-height: 20px
+ }
+a{
+    text-decoration: none;
+}

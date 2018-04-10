@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyh.p2p.dao.CreditDao">
+	
+	<select id="list" parameterType="Map" resultType="com.wyh.p2p.entities.Credit">
+		SELECT 
+			cr.FID	id,
+			FNAME name,
+			FCREDIT credit
+		FROM
+			T_CREDIT cr
+		LEFT JOIN  
+			T_CUSTOMER c
+		ON
+			c.FID=cr.FCUSTOMER_ID
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	
+	<select id="getTotle" resultType="Long">
+		SELECT 
+			COUNT(FID) 
+		FROM 
+			T_CREDIT
+	</select>
+	
+	<update id="update">
+		UPDATE T_CREDIT
+		<set>
+				FCREDIT=#{credit}
+		</set>
+		WHERE FID=#{id}
+	</update>
+	
+	<delete id="del">
+		DELETE 
+			FROM T_CREDIT 
+		WHERE 
+			FID = #{id}
+	</delete>
+	 
+	<insert id="add">
+		INSERT INTO
+			T_CREDIT
+			(FCREDIT,FCUSTOMER_ID) 
+		VALUES
+			(#{credit},#{userId})
+	</insert>
+	
+	<select id="getByCustomerId" resultType="com.wyh.p2p.entities.Credit">
+		SELECT 
+			FCREDIT credit
+		FROM
+			T_CREDIT
+		WHERE
+			FCUSTOMER_ID=#{id} 
+	</select>
+</mapper> 
