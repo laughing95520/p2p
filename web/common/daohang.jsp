@@ -41,7 +41,75 @@
                 $("#wdgl").addClass('activeMainTemp');
             }
         })
+
+        function loginSubmit() {
+            var userName = $("#signin-username").val();
+            var password = $("#signin-password").val();
+            if (userName == '') {
+                alert("账户不能为空");
+                $("#error").html('账户不能为空');
+                return false;
+            }
+            if (password == '') {
+                alert("密码不能为空");
+                $("#error").html('密码不能为空');
+                return false;
+            }
+            return true;
+        }
+
+        function registerSubmit(){
+            var userName = $("#signup-username").val();
+            var password = $("#signup-password").val();
+            var password1 = $("#signup-password1").val();
+            if(userName == ''){
+                alert("账户不能为空")
+                $("#error").html('账户不能为空');
+                return false;
+            }
+            if(password == ''){
+                alert("密码不能为空");
+                $("#error").html('密码不能为空');
+                return false;
+            }
+            if(password1 == ''){
+                alert("确认密码不能为")
+                $("#error").html('确认密码不能为空');
+                return false;
+            }
+            if(password != password1){
+                alert("密码与确认密码不一致")
+                $("#error").html('密码与确认密码不一致');
+                return false;
+            }
+            if($("#error").html() == '此账户已被注册'){
+                return false;
+            }
+            $.post("${pageContext.request.contextPath}/register.html",{'name':userName,'password':password},function(result){
+                if(result.success){
+                    if(confirm('恭喜你,注册成功,立即登录!')){
+                        location.href="${pageContext.request.contextPath}/index.html";
+                    }
+                }
+            },'json')
+        }
+
+        $(function(){
+            $("#signup-username").change(function() {
+                var userName = $("#signup-username").val();
+                var $this = $(this);
+                $.post("${pageContext.request.contextPath}/existName.html",{'userName':userName},function(result){
+                    if(result.success){
+                        $("#error").html('');
+                    }else{
+                        $("#error").html('此账户已被注册');
+                        $(this).focus();
+                    }
+                },'json')
+            });
+        })
     </script>
+
 </head>
 <body>
 <div class="container">
@@ -76,19 +144,12 @@
                         </c:if>
                     </ul>
                 </nav>
-                <%--<c:if test="${customerUser == null }">
-                    <a href="${pageContext.request.contextPath}/login.jsp" target="_blank" style="text-decoration: none;"><button type="button" class="btn btn-link btn-lg"><font id="setActive" size="4px">登录  </font></button></a>
-                </c:if>
-                <c:if test="${customerUser != null }">
-                    <a href="${pageContext.request.contextPath}/user/customer/loginout.html" target="_blank"><button type="button" class="btn btn-link btn-lg"><font size="4px">退出  </font></button></a>
-                </c:if>
-                <a href="${pageContext.request.contextPath}/register.jsp" target="_blank"><button type="button" class="btn btn-link btn-lg"><font size="4px">注册</font></button></a>
-          --%>
                 <div class="cd-user-modal">
                     <div class="cd-user-modal-container">
                         <ul style="list-style-type: none" class="cd-switcher">
                             <li><a style="text-decoration:none" href="#0" style="text-decoration:none">用户登录</a></li>
                             <li><a style="text-decoration:none" href="#0">注册新用户</a></li>
+                            <li><span id="error"></span></li>
                         </ul>
 
                         <div id="cd-login"> <!-- 登录表单 -->
@@ -112,7 +173,7 @@
                         </div>
 
                         <div id="cd-signup"> <!-- 注册表单 -->
-                            <form class="cd-form">
+                            <form class="cd-form" action="${pageContext.request.contextPath}/" onsubmit="registerSubmit()">
                                 <p class="fieldset">
                                     <label class="image-replace cd-username" for="signup-username">用户名</label>
                                     <input class="full-width has-padding has-border" id="signup-username" type="text"
@@ -126,13 +187,13 @@
 
                                 <p class="fieldset">
                                     <label class="image-replace cd-password" for="signup-password">密码</label>
-                                    <input class="full-width has-padding has-border" id="signup-password" type="text"
+                                    <input class="full-width has-padding has-border" id="signup-password" type="password"
                                            placeholder="输入密码">
                                 </p>
 
                                 <p class="fieldset">
-                                    <label class="image-replace cd-password" for="signup-password">密码</label>
-                                    <input class="full-width has-padding has-border" id="signup-password1" type="text"
+                                    <label class="image-replace cd-password" for="signup-password1">密码</label>
+                                    <input class="full-width has-padding has-border" id="signup-password1" type="password"
                                            placeholder="确认密码">
                                 </p>
 

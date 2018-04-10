@@ -12,7 +12,6 @@
     </style>
     <script type="text/javascript">
 
-
         function idcard(type, obj) {
             var formData = new FormData();
             var btnid = '#' + obj.id;

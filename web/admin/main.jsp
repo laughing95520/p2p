@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>P2P小额贷款-管理后台</title>
+<title>P2P闲钱贷-管理后台</title>
 <link href="${pageContext.request.contextPath}/favicon0.ico" rel="SHORTCUT ICON">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/icon.css">
@@ -80,11 +80,14 @@
 <div region="north" style="height: 125px;background-color: #E0ECFF">
 	<table style="padding: 5px" width="100%">
 		<tr>
-			<td width="50%">
-				<img alt="logo" src="${pageContext.request.contextPath}/static/images/logo.png">
+			<td width="8%">
+				<img alt="logo" height="89%" src="${pageContext.request.contextPath}/static/images/logo.png">
 			</td>
-			<td valign="bottom" align="right" width="50%">
-				<font size="3">&nbsp;&nbsp;<strong>欢迎：</strong>${currnetUser.name }</font>
+			<td width="" style="font-size: 50px" >
+				p2p闲钱贷----想贷就贷，无需等贷
+			</td>
+			<td align="right" width="20%" style="font-size: 30px ; padding-right: 5%;">
+				&nbsp;&nbsp;<strong>欢迎管理员：</strong>${currnetUser.name }
 			</td>
 		</tr>
 	</table>
@@ -92,7 +95,8 @@
 <div region="center">
 	<div class="easyui-tabs" fit="true" border="false" id="tabs">
 		<div title="首页" data-options="iconCls:'icon-home'">
-			<div align="center" style="padding-top: 100px"><img src="${pageContext.request.contextPath}/static/images/houtai.png"> </div>
+			<div align="center" style="padding-top: 100px">
+				<img width="100%" height="100%" src="${pageContext.request.contextPath}/static/images/houtai.png"> </div>
 		</div>
 	</div>
 </div>
