@@ -1,6 +1,9 @@
 package com.wyh.p2p.controller;
 
-import com.wyh.p2p.entities.*;
+import com.wyh.p2p.entities.Customer;
+import com.wyh.p2p.entities.CustomerLoan;
+import com.wyh.p2p.entities.CustomerLoanSon;
+import com.wyh.p2p.entities.LoanItems;
 import com.wyh.p2p.generator.entities.P2pGuarantee;
 import com.wyh.p2p.generator.entities.P2pLoan;
 import com.wyh.p2p.service.*;
@@ -96,8 +99,8 @@ public class LoanController {
         try {
             Customer customer = (Customer) session.getAttribute("customerUser");
             int cusId = customer.getId();
-            if(customerService.checkInfo(customer)&&customerDetailService.checkInfo(customer.getId())){
-                if (guaranteeService.checkInfo(cusId)){
+            if (customerService.checkInfo(customer) && customerDetailService.checkInfo(customer.getId())) {
+                if (guaranteeService.checkInfo(cusId)) {
                     int guaId = guaranteeService.findByCusId(cusId).getId();
                     p2pLoan.setGuaranteeId(guaId);
                     p2pLoan.setMoney(Double.valueOf(money));
@@ -115,17 +118,17 @@ public class LoanController {
                     } else {
                         logger.error("数据库操作失败");
                     }
-                }else {
-                    result.put("sucess",1);
+                } else {
+                    result.put("success", 1);
                 }
-            }else {
+            } else {
                 result.put("success", 2);
             }
+            ResponseUtil.write(response, result);
         } catch (Exception e) {
             logger.error("申请贷款error" + "e:" + e);
         }
     }
-
 
 
     @RequestMapping("/myloan")
@@ -144,17 +147,24 @@ public class LoanController {
     @RequestMapping("/loaninfo")
     public ModelAndView loanInfo(HttpSession session) {
         ModelAndView mv = new ModelAndView();
-        Customer customerTemp = (Customer) session.getAttribute("customerUser");
-        int cusId = customerTemp.getId();
-        P2pGuarantee p2pGuarantee = guaranteeService.findByCusId(cusId);
-        mv.addObject("cardFront",p2pGuarantee.getCardFront());
-        mv.addObject("cardBack",p2pGuarantee.getCardBack());
-        mv.addObject("type",p2pGuarantee.getType());
-        mv.addObject("imgPath",p2pGuarantee.getPhotoPath());
-        mv.addObject("mainTempIndex", 3);
-        mv.addObject("loanIndex", 2);
-        mv.setViewName("loanManage/guarantee");
-        return mv;
+        try {
+            Customer customerTemp = (Customer) session.getAttribute("customerUser");
+            int cusId = customerTemp.getId();
+            if (guaranteeService.checkInfo(cusId)) {
+                P2pGuarantee p2pGuarantee = guaranteeService.findByCusId(cusId);
+                mv.addObject("cardFront", p2pGuarantee.getCardFront());
+                mv.addObject("cardBack", p2pGuarantee.getCardBack());
+                mv.addObject("type", p2pGuarantee.getType());
+                mv.addObject("imgPath", p2pGuarantee.getPhotoPath());
+            }
+            mv.addObject("mainTempIndex", 3);
+            mv.addObject("loanIndex", 2);
+            mv.setViewName("loanManage/guarantee");
+            return mv;
+        } catch (Exception e) {
+            logger.error("loanInfo error" + e);
+            return null;
+        }
     }
 
     @RequestMapping("/uploadwyh")
@@ -165,7 +175,12 @@ public class LoanController {
         try {
             Customer customer = (Customer) session.getAttribute("customerUser");
             int cusId = customer.getId();
-            p2pGuarantee  = guaranteeService.findByCusId(cusId);
+            //TODO: 贷款资料时，考虑用户贷款资料表为空的情况。
+            p2pGuarantee = guaranteeService.findByCusId(cusId);
+            if (p2pGuarantee == null) {
+                p2pGuarantee = new P2pGuarantee();
+                p2pGuarantee.setCustomerId(0);
+            }
             byte typeByte = Byte.valueOf(type);
             String fileName = file.getOriginalFilename();
             String path = request.getSession().getServletContext().getRealPath("static/images");
@@ -173,7 +188,7 @@ public class LoanController {
             file.transferTo(targetFile);
             String filePath = "static/images/" + file.getOriginalFilename();
 
-            switch (typeByte){
+            switch (typeByte) {
                 case 1:
                 case 2:
                 case 3:
@@ -191,16 +206,17 @@ public class LoanController {
             }
             boolean flag = false;
             //是否上传过担保资料
-            if (p2pGuarantee.getCustomerId() == cusId) {
+            if (p2pGuarantee.getCustomerId() != 0) {
                 flag = guaranteeService.updateSelect(p2pGuarantee);
-            }else if (p2pGuarantee.getCustomerId() != cusId){
+            } else if (p2pGuarantee.getCustomerId() == 0) {
+                p2pGuarantee.setCustomerId(cusId);
                 flag = guaranteeService.insertSelect(p2pGuarantee);
             }
             if (flag) {
                 result.put("imagePath", filePath);
-                result.put("type",type);
+                result.put("type", type);
             } else {
-                result.put("error","error");
+                result.put("error", "error");
             }
             ResponseUtil.write(response, result);
         } catch (Exception e) {

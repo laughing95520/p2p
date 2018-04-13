@@ -104,7 +104,7 @@
 	<div class="easyui-accordion" data-options="fit:true,border:false">
 		<div title="贷款信息管理"  data-options="iconCls:'icon-plgl'" style="padding:10px">
 			<a href="javascript:openTab('贷款项目','loanItems.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">贷款项目</a>
-			<a href="javascript:openTab('贷款申请','application.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">贷款申请</a>
+			<a href="javascript:openTab('贷款申请','loanList.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">贷款申请</a>
 		</div>
 		<div title="客户信息"  data-options="iconCls:'icon-grxx'" style="padding:10px">
 		    <a href="javascript:openTab('客户基本信息','customer.jsp','icon-grxx')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">客户基本信息</a>

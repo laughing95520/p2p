@@ -21,8 +21,8 @@ public class AdminLoginFilter implements Filter {
 		if (admin != null) {
 			chain.doFilter(request, response);
 		} else {
-			String errorInfo = "您尚未登录,请登录!";
-			session.setAttribute("errorInfo", errorInfo);
+			/*String errorInfo = "您尚未登录,请登录!";
+			session.setAttribute("errorInfo", errorInfo);*/
 			request.getRequestDispatcher("/loginAdmin.jsp").forward(request, response);
 		}
 	}

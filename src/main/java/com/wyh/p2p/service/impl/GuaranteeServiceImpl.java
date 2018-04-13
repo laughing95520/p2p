@@ -32,15 +32,15 @@ public class GuaranteeServiceImpl implements GuaranteeService {
     }
 
     public P2pGuarantee findByCusId(Integer id) {
-        P2pGuarantee p2pGuarantee = new P2pGuarantee();
+
         P2pGuaranteeExample example = new P2pGuaranteeExample();
         example.createCriteria().andCustomerIdEqualTo(id);
         try{
             List<P2pGuarantee> p2pGraList = p2pGuaranteeMapper.selectByExample(example);
             if (p2pGraList.size()>0) {
-                p2pGuarantee = p2pGraList.get(0);
+                return p2pGraList.get(0);
             }
-            return p2pGuarantee;
+            return null;
         }catch (Exception e){
             logger.error("find p2p_guarantee by customeId error"+"e:"+e);
             throw new RuntimeException("findByCusId error");

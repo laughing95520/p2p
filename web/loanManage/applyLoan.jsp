@@ -341,7 +341,7 @@
                 alert("请先完善贷款资料");
                 window.location.href = "${pageContext.request.contextPath}/user/loan/loaninfo.html";
             } else if (data.success == 2) {
-                alert("请先完善个人资料");
+                alert("请先完善个人信息，包括个人账户头像");
                 window.location.href = "${pageContext.request.contextPath}/user/customer/personinfo.html";
             }
         });

@@ -1,9 +1,13 @@
 package com.wyh.p2p.service;
 
-import com.wyh.p2p.generator.entities.P2pGuarantee; /**
+import com.wyh.p2p.generator.entities.P2pGuarantee;
+
+/**
  * @author wangyihang
  * @date 2018/4/9 下午5:33
  **/
+
+
 public interface GuaranteeService {
 
     /**

@@ -23,4 +23,19 @@ public interface ApplyLoanService {
      * @return
      */
     List<P2pLoan> findByCusId(int cusId);
+
+    /**
+     * 贷款申请列表
+     * @return
+     */
+    List<P2pLoan> list(int page,int rows);
+
+    /**
+     * 审核贷款申请
+     * @param loanId
+     * @param state
+     * @param words
+     * @return
+     */
+    boolean changeLoan(int loanId, byte state, String words);
 }

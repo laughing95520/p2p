@@ -1,33 +1,117 @@
 package com.wyh.p2p.controller.admin;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.github.pagehelper.PageInfo;
 import com.wyh.p2p.entities.Admin;
 import com.wyh.p2p.entities.Application;
 import com.wyh.p2p.entities.PageBean;
+import com.wyh.p2p.entities.pojo.ApplyLoan;
+import com.wyh.p2p.generator.entities.P2pGuarantee;
+import com.wyh.p2p.generator.entities.P2pLoan;
 import com.wyh.p2p.service.ApplicationService;
+import com.wyh.p2p.service.ApplyLoanService;
+import com.wyh.p2p.service.CustomerService;
+import com.wyh.p2p.service.GuaranteeService;
 import com.wyh.p2p.util.ResponseUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/application")
 public class ApplicationAdminController {
 
+	private static Logger logger = Logger.getLogger(ApplicationAdminController.class);
+
 	@Resource
 	private ApplicationService applicationService;
+
+	@Autowired
+	private ApplyLoanService applyLoanService;
+
+	@Autowired
+	private CustomerService customerService;
+
+	@Autowired
+	private GuaranteeService guaranteeService;
+
+	@RequestMapping("/listLoan")
+	public void listLoan(@RequestParam("page") String page, @RequestParam("rows") String rows,
+						 HttpServletResponse response, HttpSession session){
+		try {
+			List<P2pLoan> p2pLoanList = applyLoanService.list(Integer.parseInt(page),Integer.parseInt(rows));
+			List<ApplyLoan> applyLoans = new ArrayList<ApplyLoan>(20);
+			for (P2pLoan temp:p2pLoanList
+				 ) {
+				ApplyLoan appTemp = converToApplyLoan(temp);
+				String name = customerService.getCustomerById(appTemp.getCustomerId()).getName();
+				appTemp.setCustomerName(name);
+				applyLoans.add(appTemp);
+			}
+			PageInfo<P2pLoan> p = new PageInfo<P2pLoan>(p2pLoanList);
+			JSONObject res = new JSONObject();
+			JsonConfig jsonConfig = new JsonConfig();
+			jsonConfig.registerJsonValueProcessor(java.util.Date.class, new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
+			JSONArray jsonArray = JSONArray.fromObject(applyLoans, jsonConfig);
+			res.put("rows", jsonArray);
+			res.put("total", p.getTotal());
+			ResponseUtil.write(response, res);
+		}catch (Exception e ){
+			logger.error("listLoan error"+e);
+		}
+
+
+	}
+
+	private ApplyLoan converToApplyLoan(P2pLoan temp) {
+		ApplyLoan applyLoan = new ApplyLoan();
+		applyLoan.setId(temp.getId());
+		applyLoan.setCustomerId(temp.getCustomerId());
+		applyLoan.setGuaranteeId(temp.getGuaranteeId());
+		applyLoan.setInterest(temp.getInterest());
+		applyLoan.setLoanMonth(temp.getLoanMonth());
+		applyLoan.setMoney(temp.getMoney());
+		applyLoan.setRate(temp.getRate());
+		applyLoan.setRepayWay(temp.getRepayWay());
+		applyLoan.setState(temp.getState());
+		applyLoan.setLendingTime(temp.getLendingTime());
+		applyLoan.setLoanTime(temp.getLoanTime());
+		applyLoan.setWords(temp.getWords());
+		return applyLoan;
+	}
+
+	@RequestMapping("/findGuarantee")
+	public void findGuarantee(HttpServletRequest request,HttpServletResponse response){
+		String id = request.getParameter("id");
+		JSONObject result = new JSONObject();
+		try {
+			int cusId = Integer.parseInt(id);
+			P2pGuarantee p2pGuarantee = guaranteeService.findByCusId(cusId);
+			if (p2pGuarantee != null) {
+				result.put("frontPath",p2pGuarantee.getCardFront());
+				result.put("backPath",p2pGuarantee.getCardBack());
+				result.put("guaType",p2pGuarantee.getType());
+				result.put("guaPath",p2pGuarantee.getPhotoPath());
+			}
+			ResponseUtil.write(response,result);
+		}catch (Exception e){
+			logger.error("查看用户贷款担保信息出错"+e);
+		}
+
+	}
 
 	@RequestMapping("/list")
 	public String list(@RequestParam("page") String page, @RequestParam("rows") String rows,
@@ -52,9 +136,26 @@ public class ApplicationAdminController {
 
 	@RequestMapping("/approval")
 	public String save(String reason, String approvalStatue, HttpServletResponse response, String id,
-			HttpSession session) throws Exception {
-		Admin admin = (Admin) session.getAttribute("currnetUser");
-		Map<String, Object> map = new HashMap<String, Object>();
+			HttpSession session) {
+		JSONObject result = new JSONObject();
+		try {
+			Admin admin = (Admin) session.getAttribute("currnetUser");
+			String words = reason + "审核人：" + admin.getName();
+			byte state = Byte.parseByte(approvalStatue);
+			int loanId = Integer.parseInt(id);
+			boolean flag;
+			flag = applyLoanService.changeLoan(loanId, state, words);
+			if (flag) {
+				result.put("success", true);
+			} else {
+				result.put("success", false);
+			}
+			ResponseUtil.write(response, result);
+		}catch (Exception e){
+			logger.error("loan save error:"+e);
+		}
+		return null;
+		/*Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
 		map.put("adminId", admin.getId());
 		map.put("statue", admin.getStatue());
@@ -64,6 +165,6 @@ public class ApplicationAdminController {
 		JSONObject result = new JSONObject();
 		result.put("success", true);
 		ResponseUtil.write(response, result);
-		return null;
+		return null;*/
 	}
 }

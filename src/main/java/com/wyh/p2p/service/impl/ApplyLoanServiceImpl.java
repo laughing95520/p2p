@@ -1,5 +1,6 @@
 package com.wyh.p2p.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.wyh.p2p.generator.entities.P2pLoan;
 import com.wyh.p2p.generator.entities.P2pLoanExample;
 import com.wyh.p2p.generator.mapperInterface.P2pLoanMapper;
@@ -8,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,7 +30,7 @@ public class ApplyLoanServiceImpl implements ApplyLoanService {
             return p2pLoanMapper.insertSelective(p2pLoan)>0;
         }catch (Exception e){
             logger.error("insert p2pLoan error"+e);
-            return false;
+            throw new RuntimeException("insertApply Error"+e);
         }
     }
 
@@ -40,6 +42,32 @@ public class ApplyLoanServiceImpl implements ApplyLoanService {
         }catch (Exception e){
             logger.error("findByCusId error"+e);
             throw new RuntimeException("findByCusId error");
+        }
+    }
+
+    public List<P2pLoan> list(int page,int rows) {
+        try{
+            P2pLoanExample example = new P2pLoanExample();
+            example.setOrderByClause("loan_time DESC");
+            PageHelper.startPage(page,rows);
+            return p2pLoanMapper.selectByExample(example);
+        }catch (Exception e){
+            logger.error("贷款项目 list error"+e);
+            throw new RuntimeException("贷款项目 list error");
+        }
+    }
+
+    public boolean changeLoan(int loanId, byte state, String words) {
+        try{
+            P2pLoan p2pLoan = new P2pLoan();
+            p2pLoan.setId(loanId);
+            p2pLoan.setState(state);
+            p2pLoan.setWords(words);
+            p2pLoan.setLendingTime(new Date());
+            return p2pLoanMapper.updateByPrimaryKeySelective(p2pLoan) > 0;
+        }catch (Exception e){
+            logger.error("审核贷款项目出错loanId :"+loanId+"error:"+e);
+            throw new RuntimeException("审核贷款项目出错loanId :"+loanId);
         }
     }
 }

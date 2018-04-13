@@ -7,5 +7,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAliases>
 		<package name="com.wyh.p2p.entities"/>
 	</typeAliases>
-</configuration>	 
+
+</configuration>
  
