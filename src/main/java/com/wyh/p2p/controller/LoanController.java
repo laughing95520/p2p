@@ -163,15 +163,17 @@ public class LoanController {
             return mv;
         } catch (Exception e) {
             logger.error("loanInfo error" + e);
-            return null;
+            mv.setViewName("error");
+            return mv;
         }
     }
 
     @RequestMapping("/uploadwyh")
-    public String uploadWyh(HttpServletResponse response, MultipartFile file, HttpServletRequest request,
+    public ModelAndView uploadWyh(HttpServletResponse response, MultipartFile file, HttpServletRequest request,
                             HttpSession session, @RequestParam("type") String type) {
         P2pGuarantee p2pGuarantee;
         JSONObject result = new JSONObject();
+        ModelAndView mv = new ModelAndView();
         try {
             Customer customer = (Customer) session.getAttribute("customerUser");
             int cusId = customer.getId();
@@ -219,10 +221,12 @@ public class LoanController {
                 result.put("error", "error");
             }
             ResponseUtil.write(response, result);
+            return null;
         } catch (Exception e) {
             logger.error("图片上传错误" + e);
+            mv.setViewName("error");
+            return mv;
         }
-        return null;
     }
 
     @RequestMapping("/upload")

@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="${pageContext.request.contextPath}/favicon0.ico" rel="SHORTCUT ICON">
 <title>闲钱贷-p2p理财平台</title>
+
 </head>
 <body>
 	<jsp:include page="/common/daohang.jsp"></jsp:include>
@@ -35,27 +36,28 @@
 						<td style='vertical-align: middle;text-align: center;'><p>${myloan.loanMonth }月</p></td>
 						<td style='vertical-align: middle;text-align: center;'><p><fmt:formatDate value="${myloan.loanTime }" pattern="yyyy-MM-dd" /> </p></td>
 						<td style='vertical-align: middle;text-align: center;'>
-							<p class="loanState"></p>
+							<p class="loanState" id="${myloan.id}">
 								<script type="text/javascript">
-								switch(parseInt(${myloan.state})){
-									case 1:
-									    $('.loanState').html("待审核");
-										break;
-									case 2:
-                                        $('.loanState').html("已放款");
-									    break;
-									case 3:
-                                        $('.loanState').html("未通过");
-									    break;
-									default:
-									    break;
-								}
+                                    var myStates = new Array();
+                                    myStates[1]="待审核";
+                                    myStates[2]="已放款";
+                                    myStates[3]="未通过";
+                                    if( parseInt(${myloan.state})==3) {
+                                        $('#${myloan.id}').html("未通过");
+                                        var mystr = "${myloan.words}";
+                                        var end = mystr.indexOf("审核人");
+                                        var res  = mystr.substring(0,end);
+                                        $('#${myloan.id}').after(res);
+									}
+									else
+									$('#${myloan.id}').html(myStates[${myloan.state}]);
 								</script>
+							</p>
 						</td>
 					</tr>
 				</c:forEach>
 			</table>
-			
+
 		</div>
 	</div>
 	

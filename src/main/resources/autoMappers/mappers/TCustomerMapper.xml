@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wyh.p2p.generator.mapperInterface.TCustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.wyh.p2p.generator.entities.TCustomer" >
+    <id column="FID" property="fid" jdbcType="INTEGER" />
+    <result column="FNAME" property="fname" jdbcType="VARCHAR" />
+    <result column="FBIRTHDAY" property="fbirthday" jdbcType="TIMESTAMP" />
+    <result column="FSEX" property="fsex" jdbcType="VARCHAR" />
+    <result column="FID_NUM" property="fidNum" jdbcType="BIGINT" />
+    <result column="FPHONE_NUM" property="fphoneNum" jdbcType="BIGINT" />
+    <result column="FADDRESS" property="faddress" jdbcType="VARCHAR" />
+    <result column="FURGENT_PERSON" property="furgentPerson" jdbcType="VARCHAR" />
+    <result column="FURGENT_PERSON_PHONE" property="furgentPersonPhone" jdbcType="BIGINT" />
+    <result column="FPASSWORD" property="fpassword" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="DOUBLE" />
+    <result column="income" property="income" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FID, FNAME, FBIRTHDAY, FSEX, FID_NUM, FPHONE_NUM, FADDRESS, FURGENT_PERSON, FURGENT_PERSON_PHONE, 
+    FPASSWORD, balance, income
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wyh.p2p.generator.entities.TCustomerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_customer
+    where FID = #{fid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_customer
+    where FID = #{fid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wyh.p2p.generator.entities.TCustomerExample" >
+    delete from t_customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wyh.p2p.generator.entities.TCustomer" >
+    insert into t_customer (FID, FNAME, FBIRTHDAY, 
+      FSEX, FID_NUM, FPHONE_NUM, 
+      FADDRESS, FURGENT_PERSON, FURGENT_PERSON_PHONE, 
+      FPASSWORD, balance, income
+      )
+    values (#{fid,jdbcType=INTEGER}, #{fname,jdbcType=VARCHAR}, #{fbirthday,jdbcType=TIMESTAMP}, 
+      #{fsex,jdbcType=VARCHAR}, #{fidNum,jdbcType=BIGINT}, #{fphoneNum,jdbcType=BIGINT}, 
+      #{faddress,jdbcType=VARCHAR}, #{furgentPerson,jdbcType=VARCHAR}, #{furgentPersonPhone,jdbcType=BIGINT}, 
+      #{fpassword,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE}, #{income,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wyh.p2p.generator.entities.TCustomer" >
+    insert into t_customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        FID,
+      </if>
+      <if test="fname != null" >
+        FNAME,
+      </if>
+      <if test="fbirthday != null" >
+        FBIRTHDAY,
+      </if>
+      <if test="fsex != null" >
+        FSEX,
+      </if>
+      <if test="fidNum != null" >
+        FID_NUM,
+      </if>
+      <if test="fphoneNum != null" >
+        FPHONE_NUM,
+      </if>
+      <if test="faddress != null" >
+        FADDRESS,
+      </if>
+      <if test="furgentPerson != null" >
+        FURGENT_PERSON,
+      </if>
+      <if test="furgentPersonPhone != null" >
+        FURGENT_PERSON_PHONE,
+      </if>
+      <if test="fpassword != null" >
+        FPASSWORD,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="fname != null" >
+        #{fname,jdbcType=VARCHAR},
+      </if>
+      <if test="fbirthday != null" >
+        #{fbirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fsex != null" >
+        #{fsex,jdbcType=VARCHAR},
+      </if>
+      <if test="fidNum != null" >
+        #{fidNum,jdbcType=BIGINT},
+      </if>
+      <if test="fphoneNum != null" >
+        #{fphoneNum,jdbcType=BIGINT},
+      </if>
+      <if test="faddress != null" >
+        #{faddress,jdbcType=VARCHAR},
+      </if>
+      <if test="furgentPerson != null" >
+        #{furgentPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="furgentPersonPhone != null" >
+        #{furgentPersonPhone,jdbcType=BIGINT},
+      </if>
+      <if test="fpassword != null" >
+        #{fpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wyh.p2p.generator.entities.TCustomerExample" resultType="java.lang.Integer" >
+    select count(*) from t_customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_customer
+    <set >
+      <if test="record.fid != null" >
+        FID = #{record.fid,jdbcType=INTEGER},
+      </if>
+      <if test="record.fname != null" >
+        FNAME = #{record.fname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbirthday != null" >
+        FBIRTHDAY = #{record.fbirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fsex != null" >
+        FSEX = #{record.fsex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fidNum != null" >
+        FID_NUM = #{record.fidNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.fphoneNum != null" >
+        FPHONE_NUM = #{record.fphoneNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.faddress != null" >
+        FADDRESS = #{record.faddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.furgentPerson != null" >
+        FURGENT_PERSON = #{record.furgentPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.furgentPersonPhone != null" >
+        FURGENT_PERSON_PHONE = #{record.furgentPersonPhone,jdbcType=BIGINT},
+      </if>
+      <if test="record.fpassword != null" >
+        FPASSWORD = #{record.fpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balance != null" >
+        balance = #{record.balance,jdbcType=DOUBLE},
+      </if>
+      <if test="record.income != null" >
+        income = #{record.income,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_customer
+    set FID = #{record.fid,jdbcType=INTEGER},
+      FNAME = #{record.fname,jdbcType=VARCHAR},
+      FBIRTHDAY = #{record.fbirthday,jdbcType=TIMESTAMP},
+      FSEX = #{record.fsex,jdbcType=VARCHAR},
+      FID_NUM = #{record.fidNum,jdbcType=BIGINT},
+      FPHONE_NUM = #{record.fphoneNum,jdbcType=BIGINT},
+      FADDRESS = #{record.faddress,jdbcType=VARCHAR},
+      FURGENT_PERSON = #{record.furgentPerson,jdbcType=VARCHAR},
+      FURGENT_PERSON_PHONE = #{record.furgentPersonPhone,jdbcType=BIGINT},
+      FPASSWORD = #{record.fpassword,jdbcType=VARCHAR},
+      balance = #{record.balance,jdbcType=DOUBLE},
+      income = #{record.income,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wyh.p2p.generator.entities.TCustomer" >
+    update t_customer
+    <set >
+      <if test="fname != null" >
+        FNAME = #{fname,jdbcType=VARCHAR},
+      </if>
+      <if test="fbirthday != null" >
+        FBIRTHDAY = #{fbirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fsex != null" >
+        FSEX = #{fsex,jdbcType=VARCHAR},
+      </if>
+      <if test="fidNum != null" >
+        FID_NUM = #{fidNum,jdbcType=BIGINT},
+      </if>
+      <if test="fphoneNum != null" >
+        FPHONE_NUM = #{fphoneNum,jdbcType=BIGINT},
+      </if>
+      <if test="faddress != null" >
+        FADDRESS = #{faddress,jdbcType=VARCHAR},
+      </if>
+      <if test="furgentPerson != null" >
+        FURGENT_PERSON = #{furgentPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="furgentPersonPhone != null" >
+        FURGENT_PERSON_PHONE = #{furgentPersonPhone,jdbcType=BIGINT},
+      </if>
+      <if test="fpassword != null" >
+        FPASSWORD = #{fpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="income != null" >
+        income = #{income,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where FID = #{fid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wyh.p2p.generator.entities.TCustomer" >
+    update t_customer
+    set FNAME = #{fname,jdbcType=VARCHAR},
+      FBIRTHDAY = #{fbirthday,jdbcType=TIMESTAMP},
+      FSEX = #{fsex,jdbcType=VARCHAR},
+      FID_NUM = #{fidNum,jdbcType=BIGINT},
+      FPHONE_NUM = #{fphoneNum,jdbcType=BIGINT},
+      FADDRESS = #{faddress,jdbcType=VARCHAR},
+      FURGENT_PERSON = #{furgentPerson,jdbcType=VARCHAR},
+      FURGENT_PERSON_PHONE = #{furgentPersonPhone,jdbcType=BIGINT},
+      FPASSWORD = #{fpassword,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=DOUBLE},
+      income = #{income,jdbcType=DOUBLE}
+    where FID = #{fid,jdbcType=INTEGER}
+  </update>
+</mapper>

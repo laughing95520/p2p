@@ -1,6 +1,7 @@
 package com.wyh.p2p.dao;
 
 import com.wyh.p2p.entities.Customer;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -58,4 +59,6 @@ public interface CustomerDao {
 	public void update(Customer customer);
 
 	public Customer getCustomerById(Integer id);
+
+	int addBalance(@Param("money") double money,@Param("cusId") int cusId);
 }

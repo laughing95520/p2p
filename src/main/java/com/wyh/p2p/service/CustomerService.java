@@ -1,6 +1,7 @@
 package com.wyh.p2p.service;
 
 import com.wyh.p2p.entities.Customer;
+import com.wyh.p2p.generator.entities.TCustomer;
 
 import java.util.List;
 import java.util.Map;
@@ -41,4 +42,8 @@ public interface CustomerService {
 	public void update(Customer customer);
 
 	public Customer getCustomerById(Integer id);
+
+	boolean updateById(TCustomer customer);
+
+	boolean addBalance(Double money, Integer customerId);
 }

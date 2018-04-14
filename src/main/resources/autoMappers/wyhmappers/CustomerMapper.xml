@@ -3,7 +3,13 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wyh.p2p.dao.CustomerDao">
-	 
+
+	<update id="addBalance">
+		UPDATE `t_customer`
+		SET `balance` = `balance` + #{money}
+		WHERE `FID` = #{cusId};
+	</update>
+
 	<select id="list" parameterType="Map" resultType="com.wyh.p2p.entities.Customer">
 		SELECT 
 			FID	id,
@@ -78,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 
 			FID = #{id}
 	</delete>
-	
+
 	<update id="update">
 		UPDATE T_CUSTOMER
 		<set>
@@ -112,4 +118,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE
 			FID=#{id}
 	</select>
+	
+
 </mapper> 

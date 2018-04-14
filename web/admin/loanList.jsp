@@ -131,7 +131,7 @@
 	}
 	
 	function resetValue(){
-		$("#approvalStatue").val('3');
+		$("#approvalStatue").val('1');
 		$("#reason").val('');
 	}
 
@@ -187,8 +187,8 @@
 						<select id='approvalStatue' name='approvalStatue' style="width: 130px">
 							<option disabled selected style='display:none;'>待审批</option>
 							<option value="2">通过</option>
-							<option value="1">不通过</option>
-							<option value="3">待审批</option>
+							<option value="1">待审批</option>
+							<option value="3">不通过</option>
 						</select>
 					</td>
 				</tr>

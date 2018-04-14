@@ -70,4 +70,13 @@ public class ApplyLoanServiceImpl implements ApplyLoanService {
             throw new RuntimeException("审核贷款项目出错loanId :"+loanId);
         }
     }
+
+    public P2pLoan findId(int loanId) {
+        try{
+            return p2pLoanMapper.selectByPrimaryKey(loanId);
+        }catch (Exception e){
+            logger.error("根据id查找贷款申请出错，loanId"+loanId+"error:"+e);
+            throw new RuntimeException("根据id查找贷款申请出错!loanId"+loanId);
+        }
+    }
 }

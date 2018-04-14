@@ -18,8 +18,10 @@ import net.sf.json.JsonConfig;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -135,26 +137,37 @@ public class ApplicationAdminController {
 	}
 
 	@RequestMapping("/approval")
-	public String save(String reason, String approvalStatue, HttpServletResponse response, String id,
+    @Transactional(rollbackFor = Exception.class)
+	public ModelAndView save(String reason, String approvalStatue, HttpServletResponse response, String id,
 			HttpSession session) {
 		JSONObject result = new JSONObject();
+        ModelAndView mv = new ModelAndView();
 		try {
 			Admin admin = (Admin) session.getAttribute("currnetUser");
 			String words = reason + "审核人：" + admin.getName();
 			byte state = Byte.parseByte(approvalStatue);
 			int loanId = Integer.parseInt(id);
 			boolean flag;
+			boolean res=false;
 			flag = applyLoanService.changeLoan(loanId, state, words);
 			if (flag) {
-				result.put("success", true);
-			} else {
-				result.put("success", false);
+                P2pLoan applyLoan = applyLoanService.findId(loanId);
+                if (applyLoan!=null) {
+                    boolean cusFlag;
+                    cusFlag = customerService.addBalance(applyLoan.getMoney(),applyLoan.getCustomerId());
+                    if (cusFlag){
+                        res = true;
+                    }
+                }
 			}
+			result.put("success", res);
 			ResponseUtil.write(response, result);
+			return null;
 		}catch (Exception e){
 			logger.error("loan save error:"+e);
+			mv.setViewName("error");
+			return mv;
 		}
-		return null;
 		/*Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
 		map.put("adminId", admin.getId());

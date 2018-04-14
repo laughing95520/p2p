@@ -38,4 +38,6 @@ public interface ApplyLoanService {
      * @return
      */
     boolean changeLoan(int loanId, byte state, String words);
+
+    P2pLoan findId(int loanId);
 }

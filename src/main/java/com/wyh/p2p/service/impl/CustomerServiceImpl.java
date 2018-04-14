@@ -2,8 +2,11 @@ package com.wyh.p2p.service.impl;
 
 import com.wyh.p2p.dao.CustomerDao;
 import com.wyh.p2p.entities.Customer;
+import com.wyh.p2p.generator.entities.TCustomer;
+import com.wyh.p2p.generator.mapperInterface.TCustomerMapper;
 import com.wyh.p2p.service.CustomerService;
 import com.wyh.p2p.util.ParamUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,6 +19,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Resource
 	private CustomerDao customerDao;
+
+	@Autowired
+	private TCustomerMapper tCustomerMapper;
 
 	public List<Customer> list(Map<String, Object> map) {
 		return customerDao.list(map);
@@ -51,5 +57,13 @@ public class CustomerServiceImpl implements CustomerService {
 
 	public Customer getCustomerById(Integer id) {
 		return customerDao.getCustomerById(id);
+	}
+
+	public boolean updateById(TCustomer customer) {
+		return tCustomerMapper.updateByPrimaryKeySelective(customer)>0;
+	}
+
+	public boolean addBalance(Double money, Integer customerId) {
+		return customerDao.addBalance(money,customerId) > 0;
 	}
 }
