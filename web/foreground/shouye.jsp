@@ -7,24 +7,42 @@
   <div class="col-md-12">
   	<div class="data_list">
 		<div class="jumbotron">
-		  <h1 class="threed">贷款项目</h1>
+		  <h1 class="threed">理财大厅、闲钱投资</h1>
 		</div>
 		<div>
 			<table class="table table-bordered table-hover">
 				<tr>
-					<th style='vertical-align: middle;text-align: center;'><p>贷款额度</p></th>
-					<th style='vertical-align: middle;text-align: center;'><p>贷款年利率</p></th>
-					<th style='vertical-align: middle;text-align: center;'><p>逾期年利率</p></th>
-					<th style='vertical-align: middle;text-align: center;'><p>贷款期限</p></th>
+					<th style='vertical-align: middle;text-align: center;'><p>项目名字</p></th>
+					<th style='vertical-align: middle;text-align: center;'><p>项目期待年利率</p></th>
+					<th style='vertical-align: middle;text-align: center;'><p>最低金额</p></th>
+					<th style='vertical-align: middle;text-align: center;'><p>项目周期(单位:月)</p></th>
 					<th style='vertical-align: middle;text-align: center;'><p>操作</p></th>
 				</tr>
-				<c:forEach items="${loanItemsList}" var="loanItem">
+				<c:forEach items="${productList}" var="prodItem">
 					<tr>
-						<td style='vertical-align: middle;text-align: center;'><p>${loanItem.moneyDown }元-${loanItem.moneyUp }元</p></td>
-						<td style='vertical-align: middle;text-align: center;'><p><fmt:formatNumber  value="${loanItem.rate}" type="number" pattern="0.00%" /><fmt:formatNumber  value="${myloan.interestRate }" type="number" pattern="0.00%" /></p></td>
-						<td style='vertical-align: middle;text-align: center;'><p><fmt:formatNumber  value="${loanItem.overRate}" type="number" pattern="0.00%" /><fmt:formatNumber  value="${myloan.interestRate }" type="number" pattern="0.00%" /></p></td>
-						<td style='vertical-align: middle;text-align: center;'><p>${loanItem.dayDown }月-${loanItem.dayUp }月</p></td>
-						<td style='vertical-align: middle;text-align: center;'><p><a class="btn btn-success btn-lg" href="${pageContext.request.contextPath}/user/loan/loan.html?id=${loanItem.id}" role="button">我要贷款</a></p></td>
+
+						<td style='vertical-align: middle;text-align: center;'>
+							<p>${prodItem.title}</p>
+						</td>
+						<td style='vertical-align: middle;text-align: center;'>
+							<p>
+							<fmt:formatNumber  value="${prodItem.rate}" type="number" pattern="0.00" />%
+							</p>
+						</td>
+						<td style='vertical-align: middle;text-align: center;'>
+							<p>${prodItem.lowestMoney}元</p>
+						</td>
+						<td style='vertical-align: middle;text-align: center;'>
+							<p>${prodItem.timeline}</p>
+						</td>
+						<td style='vertical-align: middle;text-align: center;'>
+							<p>
+								<%--<a class="btn btn-success btn-lg" href="${pageContext.request.contextPath}/user/loan/loan.html?id=${prodItem.id}" role="button">
+									我要投资
+								</a>--%>
+								我要投资
+							</p>
+						</td>
 					</tr>
 				</c:forEach>
 			</table>

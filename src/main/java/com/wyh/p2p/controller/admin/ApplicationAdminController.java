@@ -52,7 +52,7 @@ public class ApplicationAdminController {
 
 	@RequestMapping("/listLoan")
 	public void listLoan(@RequestParam("page") String page, @RequestParam("rows") String rows,
-						 HttpServletResponse response, HttpSession session){
+						 HttpServletResponse response){
 		try {
 			List<P2pLoan> p2pLoanList = applyLoanService.list(Integer.parseInt(page),Integer.parseInt(rows));
 			List<ApplyLoan> applyLoans = new ArrayList<ApplyLoan>(20);

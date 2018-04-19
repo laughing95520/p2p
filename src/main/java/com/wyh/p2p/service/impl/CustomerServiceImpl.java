@@ -66,4 +66,8 @@ public class CustomerServiceImpl implements CustomerService {
 	public boolean addBalance(Double money, Integer customerId) {
 		return customerDao.addBalance(money,customerId) > 0;
 	}
+
+	public boolean redBalance(double payMoney, int cusId) {
+		return customerDao.redBalance(payMoney,cusId) > 0;
+	}
 }

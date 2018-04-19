@@ -7,7 +7,7 @@
     <style type="text/css">
         body {
             background-color:#fcfbf9;
-            background-image:url(404.jpg);
+            background-image:url("${pageContext.request.contextPath}/404.jpg");
             background-repeat:no-repeat;
             background-position:center;
             background-attachment:fixed;

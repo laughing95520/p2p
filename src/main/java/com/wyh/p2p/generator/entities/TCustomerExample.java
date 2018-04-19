@@ -555,73 +555,73 @@ public class TCustomerExample {
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonIsNull() {
-            addCriterion("FURGENT_PERSON is null");
+        public Criteria andFbanknumIsNull() {
+            addCriterion("FBankNum is null");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonIsNotNull() {
-            addCriterion("FURGENT_PERSON is not null");
+        public Criteria andFbanknumIsNotNull() {
+            addCriterion("FBankNum is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonEqualTo(String value) {
-            addCriterion("FURGENT_PERSON =", value, "furgentPerson");
+        public Criteria andFbanknumEqualTo(String value) {
+            addCriterion("FBankNum =", value, "fbanknum");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonNotEqualTo(String value) {
-            addCriterion("FURGENT_PERSON <>", value, "furgentPerson");
+        public Criteria andFbanknumNotEqualTo(String value) {
+            addCriterion("FBankNum <>", value, "fbanknum");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonGreaterThan(String value) {
-            addCriterion("FURGENT_PERSON >", value, "furgentPerson");
+        public Criteria andFbanknumGreaterThan(String value) {
+            addCriterion("FBankNum >", value, "fbanknum");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonGreaterThanOrEqualTo(String value) {
-            addCriterion("FURGENT_PERSON >=", value, "furgentPerson");
+        public Criteria andFbanknumGreaterThanOrEqualTo(String value) {
+            addCriterion("FBankNum >=", value, "fbanknum");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonLessThan(String value) {
-            addCriterion("FURGENT_PERSON <", value, "furgentPerson");
+        public Criteria andFbanknumLessThan(String value) {
+            addCriterion("FBankNum <", value, "fbanknum");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonLessThanOrEqualTo(String value) {
-            addCriterion("FURGENT_PERSON <=", value, "furgentPerson");
+        public Criteria andFbanknumLessThanOrEqualTo(String value) {
+            addCriterion("FBankNum <=", value, "fbanknum");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonLike(String value) {
-            addCriterion("FURGENT_PERSON like", value, "furgentPerson");
+        public Criteria andFbanknumLike(String value) {
+            addCriterion("FBankNum like", value, "fbanknum");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonNotLike(String value) {
-            addCriterion("FURGENT_PERSON not like", value, "furgentPerson");
+        public Criteria andFbanknumNotLike(String value) {
+            addCriterion("FBankNum not like", value, "fbanknum");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonIn(List<String> values) {
-            addCriterion("FURGENT_PERSON in", values, "furgentPerson");
+        public Criteria andFbanknumIn(List<String> values) {
+            addCriterion("FBankNum in", values, "fbanknum");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonNotIn(List<String> values) {
-            addCriterion("FURGENT_PERSON not in", values, "furgentPerson");
+        public Criteria andFbanknumNotIn(List<String> values) {
+            addCriterion("FBankNum not in", values, "fbanknum");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonBetween(String value1, String value2) {
-            addCriterion("FURGENT_PERSON between", value1, value2, "furgentPerson");
+        public Criteria andFbanknumBetween(String value1, String value2) {
+            addCriterion("FBankNum between", value1, value2, "fbanknum");
             return (Criteria) this;
         }
 
-        public Criteria andFurgentPersonNotBetween(String value1, String value2) {
-            addCriterion("FURGENT_PERSON not between", value1, value2, "furgentPerson");
+        public Criteria andFbanknumNotBetween(String value1, String value2) {
+            addCriterion("FBankNum not between", value1, value2, "fbanknum");
             return (Criteria) this;
         }
 

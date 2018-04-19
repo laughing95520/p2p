@@ -72,7 +72,7 @@ function close(){
 		<thead>
 		<tr>
 			<th field='cb' checkbox=true></th>
-			<th field='id' width=20px align="center">编号</th>
+			<th field='id' width=20px align="center" hidden="true">编号</th>
 			<th field='name' width=50px align="center">用户名</th>
 			<th field='career' width=50px align="center">职业</th>
 			<th field='education' width=50px align="center" formatter="formatCareer">学历</th>

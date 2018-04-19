@@ -46,4 +46,6 @@ public interface CustomerService {
 	boolean updateById(TCustomer customer);
 
 	boolean addBalance(Double money, Integer customerId);
+
+    boolean redBalance(double payMoney, int cusId);
 }

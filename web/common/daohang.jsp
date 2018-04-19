@@ -26,9 +26,8 @@
 
 
     <!-- loginlib -->
-    <link rel="stylesheet" type="text/css" href="/loginlib/style.css"/>
-    <script src="https://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
-    <script src="/loginlib/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/loginlib/style.css"/>
+    <script src="${pageContext.request.contextPath}/loginlib/main.js"></script>
     <script type="text/javascript">
         $(function () {
             if ($("#setActiveMainTemp").val() == 1) {

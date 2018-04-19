@@ -70,15 +70,15 @@ function close(){
 		<thead>
 		<tr>
 			<th field='cb' checkbox=true></th>
-			<th field='id' width=20px align="center">编号</th>
+			<th field='id' width=20px align="center" hidden="true">编号</th>
 			<th field='name' width=50px align="center">用户名</th>
 			<th field='birthday' width=50px align="center">出生日期</th>
 			<th field='sex' width=50px align="center" formatter="formatSex">性别</th>
 			<th field='idNum' width=50px align="center">身份证号码</th>
 			<th field='phoneNum' width=50px align="center">联系电话</th>
 			<th field='address' width=50px align="center">地址</th>
-			<th field='urgentPerson' width=50px align="center">紧急联系人</th>
-			<th field='urgentPersonPhone' width=50px align="center">紧急联系人电话</th>
+			<th field='fBankNum' width=50px align="center">银行卡号</th>
+			<th field='urgentPersonPhone' width=50px align="center">紧急联系电话</th>
 		</tr>
     </thead>
 	</table>

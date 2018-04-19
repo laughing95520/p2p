@@ -9,7 +9,7 @@
     <result column="FID_NUM" property="fidNum" jdbcType="BIGINT" />
     <result column="FPHONE_NUM" property="fphoneNum" jdbcType="BIGINT" />
     <result column="FADDRESS" property="faddress" jdbcType="VARCHAR" />
-    <result column="FURGENT_PERSON" property="furgentPerson" jdbcType="VARCHAR" />
+    <result column="FBankNum" property="fbanknum" jdbcType="VARCHAR" />
     <result column="FURGENT_PERSON_PHONE" property="furgentPersonPhone" jdbcType="BIGINT" />
     <result column="FPASSWORD" property="fpassword" jdbcType="VARCHAR" />
     <result column="balance" property="balance" jdbcType="DOUBLE" />
@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    FID, FNAME, FBIRTHDAY, FSEX, FID_NUM, FPHONE_NUM, FADDRESS, FURGENT_PERSON, FURGENT_PERSON_PHONE, 
+    FID, FNAME, FBIRTHDAY, FSEX, FID_NUM, FPHONE_NUM, FADDRESS, FBankNum, FURGENT_PERSON_PHONE, 
     FPASSWORD, balance, income
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wyh.p2p.generator.entities.TCustomerExample" >
@@ -110,12 +110,12 @@
   <insert id="insert" parameterType="com.wyh.p2p.generator.entities.TCustomer" >
     insert into t_customer (FID, FNAME, FBIRTHDAY, 
       FSEX, FID_NUM, FPHONE_NUM, 
-      FADDRESS, FURGENT_PERSON, FURGENT_PERSON_PHONE, 
+      FADDRESS, FBankNum, FURGENT_PERSON_PHONE, 
       FPASSWORD, balance, income
       )
     values (#{fid,jdbcType=INTEGER}, #{fname,jdbcType=VARCHAR}, #{fbirthday,jdbcType=TIMESTAMP}, 
       #{fsex,jdbcType=VARCHAR}, #{fidNum,jdbcType=BIGINT}, #{fphoneNum,jdbcType=BIGINT}, 
-      #{faddress,jdbcType=VARCHAR}, #{furgentPerson,jdbcType=VARCHAR}, #{furgentPersonPhone,jdbcType=BIGINT}, 
+      #{faddress,jdbcType=VARCHAR}, #{fbanknum,jdbcType=VARCHAR}, #{furgentPersonPhone,jdbcType=BIGINT}, 
       #{fpassword,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE}, #{income,jdbcType=DOUBLE}
       )
   </insert>
@@ -143,8 +143,8 @@
       <if test="faddress != null" >
         FADDRESS,
       </if>
-      <if test="furgentPerson != null" >
-        FURGENT_PERSON,
+      <if test="fbanknum != null" >
+        FBankNum,
       </if>
       <if test="furgentPersonPhone != null" >
         FURGENT_PERSON_PHONE,
@@ -181,8 +181,8 @@
       <if test="faddress != null" >
         #{faddress,jdbcType=VARCHAR},
       </if>
-      <if test="furgentPerson != null" >
-        #{furgentPerson,jdbcType=VARCHAR},
+      <if test="fbanknum != null" >
+        #{fbanknum,jdbcType=VARCHAR},
       </if>
       <if test="furgentPersonPhone != null" >
         #{furgentPersonPhone,jdbcType=BIGINT},
@@ -228,8 +228,8 @@
       <if test="record.faddress != null" >
         FADDRESS = #{record.faddress,jdbcType=VARCHAR},
       </if>
-      <if test="record.furgentPerson != null" >
-        FURGENT_PERSON = #{record.furgentPerson,jdbcType=VARCHAR},
+      <if test="record.fbanknum != null" >
+        FBankNum = #{record.fbanknum,jdbcType=VARCHAR},
       </if>
       <if test="record.furgentPersonPhone != null" >
         FURGENT_PERSON_PHONE = #{record.furgentPersonPhone,jdbcType=BIGINT},
@@ -257,7 +257,7 @@
       FID_NUM = #{record.fidNum,jdbcType=BIGINT},
       FPHONE_NUM = #{record.fphoneNum,jdbcType=BIGINT},
       FADDRESS = #{record.faddress,jdbcType=VARCHAR},
-      FURGENT_PERSON = #{record.furgentPerson,jdbcType=VARCHAR},
+      FBankNum = #{record.fbanknum,jdbcType=VARCHAR},
       FURGENT_PERSON_PHONE = #{record.furgentPersonPhone,jdbcType=BIGINT},
       FPASSWORD = #{record.fpassword,jdbcType=VARCHAR},
       balance = #{record.balance,jdbcType=DOUBLE},
@@ -287,8 +287,8 @@
       <if test="faddress != null" >
         FADDRESS = #{faddress,jdbcType=VARCHAR},
       </if>
-      <if test="furgentPerson != null" >
-        FURGENT_PERSON = #{furgentPerson,jdbcType=VARCHAR},
+      <if test="fbanknum != null" >
+        FBankNum = #{fbanknum,jdbcType=VARCHAR},
       </if>
       <if test="furgentPersonPhone != null" >
         FURGENT_PERSON_PHONE = #{furgentPersonPhone,jdbcType=BIGINT},
@@ -313,7 +313,7 @@
       FID_NUM = #{fidNum,jdbcType=BIGINT},
       FPHONE_NUM = #{fphoneNum,jdbcType=BIGINT},
       FADDRESS = #{faddress,jdbcType=VARCHAR},
-      FURGENT_PERSON = #{furgentPerson,jdbcType=VARCHAR},
+      FBankNum = #{fbanknum,jdbcType=VARCHAR},
       FURGENT_PERSON_PHONE = #{furgentPersonPhone,jdbcType=BIGINT},
       FPASSWORD = #{fpassword,jdbcType=VARCHAR},
       balance = #{balance,jdbcType=DOUBLE},

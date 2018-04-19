@@ -17,7 +17,7 @@ public class TCustomer {
 
     private String faddress;
 
-    private String furgentPerson;
+    private String fbanknum;
 
     private Long furgentPersonPhone;
 
@@ -83,12 +83,12 @@ public class TCustomer {
         this.faddress = faddress == null ? null : faddress.trim();
     }
 
-    public String getFurgentPerson() {
-        return furgentPerson;
+    public String getFbanknum() {
+        return fbanknum;
     }
 
-    public void setFurgentPerson(String furgentPerson) {
-        this.furgentPerson = furgentPerson == null ? null : furgentPerson.trim();
+    public void setFbanknum(String fbanknum) {
+        this.fbanknum = fbanknum == null ? null : fbanknum.trim();
     }
 
     public Long getFurgentPersonPhone() {

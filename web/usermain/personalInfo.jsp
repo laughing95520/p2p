@@ -142,13 +142,13 @@
             </div>
             <hr>
             <div class="input-group">
-                <span class="input-group-addon">紧急联系人　　</span>
-                <input type="text" class="form-control" aria-describedby="basic-addon1" name='urgentPerson'
-                       value="${customer.urgentPerson }">
+                <span class="input-group-addon">银行卡号　　</span>
+                <input type="text" class="form-control" aria-describedby="basic-addon1" name='fBankNum'
+                       value="${customer.fBankNum }">
             </div>
             <hr>
             <div class="input-group">
-                <span class="input-group-addon">紧急联系人电话</span>
+                <span class="input-group-addon">紧急联系电话</span>
                 <input type="text" class="form-control" aria-describedby="basic-addon1" name='urgentPersonPhone'
                        value="${customer.urgentPersonPhone }">
             </div>

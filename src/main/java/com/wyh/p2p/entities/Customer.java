@@ -31,8 +31,9 @@ public class Customer {
 	// 地址（省+市）例 陕西省-西安市
 	private String address;
 
-	// 紧急联系人
-	private String urgentPerson;
+	// 银行卡号
+	private String fBankNum;
+
 
 	// 基金联系人电话
 	private Long urgentPersonPhone;
@@ -118,14 +119,13 @@ public class Customer {
 		this.address = address;
 	}
 
-	public String getUrgentPerson() {
-		return urgentPerson;
+	public String getfBankNum() {
+		return fBankNum;
 	}
 
-	public void setUrgentPerson(String urgentPerson) {
-		this.urgentPerson = urgentPerson;
+	public void setfBankNum(String fBankNum) {
+		this.fBankNum = fBankNum;
 	}
-
 	public Long getUrgentPersonPhone() {
 		return urgentPersonPhone;
 	}

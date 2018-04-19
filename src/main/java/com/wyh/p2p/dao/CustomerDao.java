@@ -61,4 +61,6 @@ public interface CustomerDao {
 	public Customer getCustomerById(Integer id);
 
 	int addBalance(@Param("money") double money,@Param("cusId") int cusId);
+
+    int redBalance(@Param("money") double money,@Param("cusId") int cusId);
 }

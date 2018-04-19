@@ -103,13 +103,14 @@
 <div region="west" style="width: 200px" title="导航菜单" split="true">
 	<div class="easyui-accordion" data-options="fit:true,border:false">
 		<div title="贷款信息管理"  data-options="iconCls:'icon-plgl'" style="padding:10px">
-			<a href="javascript:openTab('贷款项目','loanItems.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">贷款项目</a>
+			<a href="javascript:openTab('投资理财项目','productItems.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">投资理财项目</a>
 			<a href="javascript:openTab('贷款申请','loanList.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">贷款申请</a>
 		</div>
 		<div title="客户信息"  data-options="iconCls:'icon-grxx'" style="padding:10px">
 		    <a href="javascript:openTab('客户基本信息','customer.jsp','icon-grxx')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">客户基本信息</a>
 		    <a href="javascript:openTab('客户详情信息','customerDetail.jsp','icon-grxx')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">客户详情信息</a>
-		    <a href="javascript:openTab('客户贷款资料','customerLoan.jsp','icon-grxx')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">客户贷款资料</a>
+			<a href="javascript:openTab('个人账户余额管理','balance.jsp','icon-grxx')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">账户余额管理</a>
+
 		</div>
 		<div title="客户信用管理"  data-options="iconCls:'icon-grxx'" style="padding:10px">
 			<a href="javascript:openTab('客户信用管理','credit.jsp','icon-grxxxg')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">客户信用管理</a>

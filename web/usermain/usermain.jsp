@@ -59,7 +59,7 @@ function idcard(obj){
 				<br>
 				<p>投资收益　:&nbsp;&nbsp;${customer.income }</p>
 				<br>
-				<p>个人统计:&nbsp;&nbsp;共${loanInfoMap['loanNum'] }条贷款记录</p>
+				<p><a href="${pageContext.request.contextPath}/user/loan/myloan.html">贷款统计:</a>&nbsp;&nbsp;共${loanInfoMap['loanNum'] }条贷款记录</p>
 			  </div>
 			  <div class="col-md-4 c" style="padding-right: 100px">
 					 <img src="${pageContext.request.contextPath}/${photo}" alt="个人照片" class="img-rounded" width="230px" height="260px" id='imggrzp'>

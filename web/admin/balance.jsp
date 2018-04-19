@@ -16,31 +16,22 @@
 	
 var url;
 
-function formatStatus(val,row){
-	if(val == 0){
-		return '优秀';
-	}else if(val == 1){
-		return '良好';
-	}else{
-		return '不良';
-	}
+function formatMoney(val,row){
+    return val+'元';
 }
 
-function add(){
-	$('#dlg').dialog('open').dialog('setTitle','添加客户信用信息');
-	url='${pageContext.request.contextPath}/admin/credit/save.do';
-}
-
-function edit(){
+function addBalance(){
 	var selectedRows=$("#dg").datagrid("getSelections");
 	if(selectedRows.length!=1){
-		$.messager.alert("系统提示","请选择一个要修改的客户信用！");
+		$.messager.alert("系统提示","请选择一个要充值的客户！");
 		return;
 	}
 	var row=selectedRows[0];
-	$("#dlg").dialog("open").dialog("setTitle","修改客户信用信息");
+	$("#dlg").dialog("open").dialog("setTitle","余额充值");
 	$("#fm").form('load',row);
-	url="${pageContext.request.contextPath}/admin/credit/save.do?id="+row.id;
+    $("#typeDes").html("余额充值:");
+    $("#type").val(1);
+    url="${pageContext.request.contextPath}/admin/customer/changeBalance.do";
 }
 
 function save(){
@@ -56,35 +47,29 @@ function save(){
 				resetValue();
 				$("#dlg").dialog("close");
 				$("#dg").datagrid("reload");
+			}else {
+                $.messager.alert("系统提示","操作失败");
+                resetValue();
+                $("#dlg").dialog("close");
+                $("#dg").datagrid("reload");
 			}
 		}
 	})
 }
 
 
-function del(){
-	var selections = $("#dg").datagrid("getSelections");
-	if(selections.length == 0){
-		$.messager.alert('系统提示', '请选择要删除的数据!');
-		return;
-	}
-	$.messager.confirm('系统提示',"您确定要删除这<font color='red'>"+selections.length+'</font>条数据吗?',function(r){
-		if(r){
-			var strIds = [];
-			for(var i=0; i < selections.length; i++){
-				strIds.push(selections[i].id);
-			}
-			var ids = strIds.join(',');
-			$.post("${pageContext.request.contextPath}/admin/credit/delete.do",{"ids":ids},function(result){
-				if(result.success){
-					$.messager.alert('系统提示', '删除成功!');
-					$("#dg").datagrid("reload");
-				}
-			},'json');
-			$("#dg").datagrid("reload");
-		}
-		
-	});
+function reduce(){
+    var selectedRows=$("#dg").datagrid("getSelections");
+    if(selectedRows.length!=1){
+        $.messager.alert("系统提示","请选择一个要提现的客户！");
+        return;
+    }
+    var row=selectedRows[0];
+    $("#dlg").dialog("open").dialog("setTitle","余额提现");
+    $("#fm").form('load',row);
+    $("#typeDes").html("余额提现:");
+    $("#type").val(2);
+    url="${pageContext.request.contextPath}/admin/customer/changeBalance.do";
 }
 
 function close(){
@@ -93,17 +78,14 @@ function close(){
 }
 
 function resetValue(){
-	$("#name").val('');
-	$("#jobNum").val('');
-	$("#statue").val('0');
-	$("#pasword").val('');
+	$("#payMoney").val('');
 }
 </script>
 </head>
 <body style="margin: 1px">
-	<table class="easyui-datagrid" title="客户信用管理"
+	<table class="easyui-datagrid" title="客户余额管理"
 		id="dg"
-    	url='${pageContext.request.contextPath}/admin/credit/list.do'
+    	url='${pageContext.request.contextPath}/admin/customer/list.do'
     	pagination=true
 		rownumbers=true
 		fitColumns=true
@@ -114,36 +96,35 @@ function resetValue(){
 		<tr>
 			<th field='cb' checkbox=true></th>
 			<th field='id' width=20px align="center" hidden="true">编号</th>
-			<th field='name' width=200px align="center">姓名</th>
-			<th field='credit' width=100px align="center" formatter="formatStatus">客户信用</th>
+			<th field='name' width=50px align="center">姓名</th>
+			<th field="balance" width="100px" align="center" formatter="formatMoney">用户余额</th>
+			<th field="fBankNum" width="200px" align="center">用户银行卡号</th>
+			<th field='phoneNum' width=100px align="center">用户联系电话</th>
 		</tr>
     	</thead>
 	</table>
 	<div id="tb">
 			<div>
-				&nbsp;<a href="javascript:edit()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">修改</a>
-				&nbsp;<a href="javascript:del()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'">删除</a>
+				&nbsp;<a href="javascript:addBalance()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">充值</a>
+				&nbsp;<a href="javascript:reduce()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">提现</a>
 			</div>
 		</div>
 	
 	<div id="dlg" class="easyui-dialog" data-options="iconCls:'icon-save',buttons:'#dlg-buttons'" style="width: 420px;height: 230px;padding: 10px 20px" closed="true">
 		<form method="post" id="fm">
-			<table cellspacing="8px">
+			<table cellspacing="15px">
 				<tr>
-					<td>用户名:</td>
+					<td>用户姓名:</td>
 					<td>
-						<input type="text" id="name" name="name" class="easyui-validatebox" required='true' readonly='true'/>
+						<input type="hidden" id="id" name="id"/>
+						<input type="text" id="name" name="name"  required='true' readonly='true' style="border:none"/>
 					</td>
 				</tr>
 				<tr>
-					<td>客户信用级别:</td>
+					<td id="typeDes" name="typeDes"></td>
 					<td>
-						<select id='credit' name='credit' style="width: 130px">
-							<option disabled selected style='display:none;'>请选择客户信用级别</option>
-							<option value="0">优秀</option>
-							<option value="1">良好</option>
-							<option value="2">不良</option>
-						</select>
+						<input type="hidden" id="type" name="type" />
+						<input type="text" id="payMoney" name="payMoney" class="easyui-validatebox" required="true" />
 					</td>
 				</tr>
 			</table>

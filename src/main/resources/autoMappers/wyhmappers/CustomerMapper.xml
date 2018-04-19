@@ -10,6 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE `FID` = #{cusId};
 	</update>
 
+	<update id="redBalance">
+		UPDATE `t_customer`
+		SET `balance` = `balance` - #{money}
+		WHERE `FID` = #{cusId};
+	</update>
+
 	<select id="list" parameterType="Map" resultType="com.wyh.p2p.entities.Customer">
 		SELECT 
 			FID	id,
@@ -19,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FSEX sex,
 			FPHONE_NUM phoneNum,
 			FADDRESS address,
-			FURGENT_PERSON urgentPerson,
+			FBankNum fBankNum,
 			FURGENT_PERSON_PHONE urgentPersonPhone,
 			FPASSWORD password,
 			balance balance,
@@ -48,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FSEX sex,
 			FPHONE_NUM phoneNum,
 			FADDRESS address,
-			FURGENT_PERSON urgentPerson,
+			FBankNum fBankNum,
 			FURGENT_PERSON_PHONE urgentPersonPhone,
 			FPASSWORD password,
 			balance balance,
@@ -92,7 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				FBIRTHDAY=#{birthday},
 				FPHONE_NUM=#{phoneNum},
 				FADDRESS=#{address},
-				FURGENT_PERSON=#{urgentPerson},
+				FBankNum=#{fBankNum},
 				FID_NUM=#{idNum},
 				FURGENT_PERSON_PHONE=#{urgentPersonPhone},
 				FPASSWORD=#{password},
@@ -109,7 +115,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FSEX sex,
 			FPHONE_NUM phoneNum,
 			FADDRESS address,
-			FURGENT_PERSON urgentPerson,
+			FBankNum fBankNum,
 			FURGENT_PERSON_PHONE urgentPersonPhone,
 			balance balance,
 			income income

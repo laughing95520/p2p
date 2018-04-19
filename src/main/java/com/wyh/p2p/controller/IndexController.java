@@ -2,12 +2,13 @@ package com.wyh.p2p.controller;
 
 import com.wyh.p2p.entities.Credit;
 import com.wyh.p2p.entities.Customer;
-import com.wyh.p2p.entities.LoanItems;
+import com.wyh.p2p.generator.entities.P2pProduct;
 import com.wyh.p2p.service.CreditService;
 import com.wyh.p2p.service.CustomerService;
-import com.wyh.p2p.service.LoanItemsService;
+import com.wyh.p2p.service.ProductService;
 import com.wyh.p2p.util.ResponseUtil;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,19 +23,20 @@ import java.util.List;
 public class IndexController {
 
 	@Resource
-	private LoanItemsService loanItemsService;
-
-	@Resource
 	private CustomerService customerService;
 
 	@Resource
 	private CreditService creditService;
 
+
+	@Autowired
+    private ProductService productService;
+
 	@RequestMapping("/index")
 	public ModelAndView index(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		List<LoanItems> loanItemsList = loanItemsService.viewlist();
-		session.setAttribute("loanItemsList", loanItemsList);
+		List<P2pProduct> products = productService.viewList(0);
+		session.setAttribute("productList", products);
 		mv.addObject("mainTempIndex", 1);
 		mv.setViewName("mainTemp");
 		return mv;
