@@ -60,6 +60,8 @@ public class CustomerController {
 	@RequestMapping("/index")
 	public ModelAndView index(HttpSession session) {
 		Customer customer = (Customer)session.getAttribute("customerUser");
+		customer = customerService.getCustomerById(customer.getId());
+		session.setAttribute("customerUser",customer);
 		int cusId = customer.getId();
 		List<P2pLoan> p2pLoanList = applyLoanService.findByCusId(cusId);
 		Map<String, Object> loanInfoMap = new HashMap<String, Object>(10);
@@ -90,27 +92,6 @@ public class CustomerController {
 		mv.addObject("photo",photo);
 		mv.setViewName("usermain/usermain");
 		return mv;
-//		Customer customer = (Customer) session.getAttribute("customerUser");
-//		customer = customerService.getCustomerById(customer.getId());
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("id", customer.getId());
-//		map.put("success", 0);
-//		int loanNum = applicationService.loanNum(map);
-//		personInfoMap.put("loanNum", loanNum);
-//		map.put("success", 1);
-//		int successLoanNum = applicationService.loanNum(map);
-//		personInfoMap.put("successLoanNum", successLoanNum);
-//		int totalMoney = 0;
-//		if (successLoanNum > 0) {
-//			totalMoney = applicationService.getTotleMoney(customer.getId());
-//		}
-//		personInfoMap.put("totalMoney", totalMoney);
-//		CustomerDetail customerDetail = customerDetailService.getInfo(customer.getId());
-//		String photo = "";
-//		if (customerDetail != null) {
-//			photo = customerDetail.getPhoto();
-//		}
-//		personInfoMap.put("photo", photo);
 
 	}
 

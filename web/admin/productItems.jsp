@@ -165,9 +165,9 @@
         &nbsp;<a href="javascript:add()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a>
         &nbsp;<a href="javascript:del()" class="easyui-linkbutton"
                  data-options="plain:true,iconCls:'icon-remove'">删除</a>
-        &nbsp;<a href="javascript:setRelease(1)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'"
+        &nbsp;<a href="javascript:setRelease(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'"
                  plain="true">发布</a>
-        &nbsp;<a href="javascript:setRelease(0)" class="easyui-linkbutton"
+        &nbsp;<a href="javascript:setRelease(1)" class="easyui-linkbutton"
                  data-options="plain:true,iconCls:'icon-remove'" plain="true">取消发布</a>
     </div>
 </div>

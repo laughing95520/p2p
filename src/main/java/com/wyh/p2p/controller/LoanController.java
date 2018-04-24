@@ -3,15 +3,19 @@ package com.wyh.p2p.controller;
 import com.wyh.p2p.entities.Customer;
 import com.wyh.p2p.entities.CustomerLoan;
 import com.wyh.p2p.entities.CustomerLoanSon;
-import com.wyh.p2p.entities.LoanItems;
+import com.wyh.p2p.entities.pojo.RepaymentPojo;
 import com.wyh.p2p.generator.entities.P2pGuarantee;
 import com.wyh.p2p.generator.entities.P2pLoan;
+import com.wyh.p2p.generator.entities.P2pRate;
+import com.wyh.p2p.generator.entities.P2pRepayment;
 import com.wyh.p2p.service.*;
+import com.wyh.p2p.util.CalUtil;
 import com.wyh.p2p.util.ResponseUtil;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,8 +40,8 @@ public class LoanController {
 
     private static Logger logger = Logger.getLogger(LoanController.class);
 
-    @Resource
-    private LoanItemsService loanItemsService;
+    @Autowired
+    private LoanRateService loanRateService;
 
     @Resource
     private ApplicationService applicationService;
@@ -57,6 +64,10 @@ public class LoanController {
     @Autowired
     private GuaranteeService guaranteeService;
 
+    @Autowired
+    private RepaymentService repaymentService;
+
+
     @RequestMapping("/index")
     public ModelAndView index(HttpSession session) {
         ModelAndView mv = new ModelAndView();
@@ -65,20 +76,122 @@ public class LoanController {
         return mv;
     }
 
-    @RequestMapping("/loan")
-    public ModelAndView loan(HttpSession session, @RequestParam("id") String id) {
-        LoanItems loanItem = loanItemsService.getLoanItemsById(id);
-        session.setAttribute("loanItem", loanItem);
+    /**
+     * 用户还款信息列表
+     * @param session
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/list")
+    public ModelAndView list(HttpSession session, HttpServletResponse response){
         ModelAndView mv = new ModelAndView();
-        mv.addObject("mainTempIndex", 1);
-        mv.setViewName("loanManage/woyaodaikuan");
+        List<RepaymentPojo> resultList = new ArrayList<>(10);
+        Customer customer = (Customer)session.getAttribute("customerUser");
+        List<P2pRepayment> pRepayments = repaymentService.list(customer.getId());
+        if (pRepayments.size() > 0) {
+            for (P2pRepayment temp : pRepayments) {
+                RepaymentPojo pojo = new RepaymentPojo();
+                P2pLoan p2pLoan = applyLoanService.findId(temp.getLoanId());
+                if (p2pLoan !=null && customer !=null) {
+                    pojo.setId(temp.getId());
+                    pojo.setLoanId(temp.getLoanId());
+                    pojo.setLendTime(p2pLoan.getLendingTime());
+                    pojo.setLoanMoney(p2pLoan.getMoney());
+                    pojo.setLoanMonth(p2pLoan.getLoanMonth());
+                    pojo.setPayMoney(temp.getPayMoney());
+                    pojo.setRepayPeriods(temp.getRepayPeriods());
+                    pojo.setRate(p2pLoan.getRate());
+                    byte repayWay = p2pLoan.getRepayWay();
+                    pojo.setPayMethod(repayWay);
+                    pojo.setResidueMoney(temp.getResidueMoney());
+                    double repayMoneyNow;
+                    //还款方式不同，计算还款金额
+                    if (repayWay == 1){
+                        RepaymentPojo tempPojo = CalUtil.calRepayNow(temp.getPayMoney(),p2pLoan.getMoney(),p2pLoan.getLoanMonth(),temp.getRepayPeriods());
+                        pojo.setRepayMoneyNow(tempPojo.getRepayMoneyNow());
+                    }else if (repayWay == 2){
+                        if (temp.getRepayPeriods() == 0){
+                            repayMoneyNow = p2pLoan.getMoney()+p2pLoan.getInterest();
+                        }else{
+                            repayMoneyNow = 0;
+                        }
+                        pojo.setRepayMoneyNow(repayMoneyNow);
+                    }
+                }
+                resultList.add(pojo);
+            }
+            mv.addObject("resultList",resultList);
+        }
+        mv.setViewName("loanManage/myRepay");
         return mv;
     }
 
 
-    @RequestMapping("/applyLoan")
-    public ModelAndView applyLoan() {
+    /**
+     * 用户还款
+     * @return
+     */
+    @RequestMapping("/repay")
+    @Transactional(rollbackFor = Exception.class)
+    public String repay(@RequestParam("id")String id,@RequestParam("choice")String choice,
+                        HttpServletResponse response,HttpSession session) throws IOException {
+        JSONObject result = new JSONObject();
+        Customer customer = (Customer) session.getAttribute("customerUser");
+        int repayId = Integer.parseInt(id);
+        int repayChoice = Integer.parseInt(choice);
+        customer = customerService.getCustomerById(customer.getId());
+        P2pRepayment pRepayment = repaymentService.getById(repayId);
+        P2pLoan pLoan = applyLoanService.findId(pRepayment.getLoanId());
+        double repayMoney = 0;
+        Integer repayPeriods = 0;
+        boolean flag;
+        //本期还款
+        if (repayChoice == 1){
+            repayMoney = CalUtil.calRepayNow(pRepayment.getPayMoney(),pRepayment.getLoanMoney(),pLoan.getLoanMonth(),pRepayment.getRepayPeriods()).getRepayMoneyNow();
+            repayPeriods = null;
+        }
+        //全部还款
+        else if (repayChoice == 2){
+            repayMoney = pRepayment.getResidueMoney();
+            repayPeriods = pLoan.getLoanMonth();
+        }
+        BigDecimal b = new BigDecimal(repayMoney);
+        repayMoney = b.setScale(2,   BigDecimal.ROUND_HALF_UP).floatValue();
+        if ((customer.getBalance()-repayMoney)>=0){
+            flag = repaymentService.repayMoney(pRepayment.getId(),repayMoney,repayPeriods);
+            if (repaymentService.getById(pRepayment.getId()).getResidueMoney() == 0){
+
+            }
+            if (flag){
+                flag = customerService.redBalance(repayMoney,customer.getId());
+                result.put("success",flag);
+            }
+        }else {
+            result.put("success",false);
+            result.put("message","余额不足，请联系管理员");
+        }
+        ResponseUtil.write(response, result);
+        return null;
+    }
+
+    @RequestMapping("/loanType")
+    public ModelAndView loanType(){
+        List<P2pRate> pRateList = loanRateService.list();
         ModelAndView mv = new ModelAndView();
+        mv.addObject("rateList",pRateList);
+        mv.addObject("mainTempIndex", 3);
+        mv.setViewName("loanManage/loanType");
+        return mv;
+    }
+
+    @RequestMapping("/applyLoan")
+    public ModelAndView applyLoan(@RequestParam("id")String type) {
+        ModelAndView mv = new ModelAndView();
+        int intId = Integer.parseInt(type);
+        P2pRate rate = loanRateService.getRateById(intId);
+        float frate = rate.getRate();
+        mv.addObject("rate",frate);
         mv.addObject("mainTempIndex", 3);
         mv.setViewName("loanManage/applyLoan");
         return mv;

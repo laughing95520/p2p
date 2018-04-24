@@ -55,5 +55,11 @@
         </table>
         <table tableName="p2p_product">
         </table>
+        <table tableName="p2p_invest">
+        </table>
+        <table tableName="p2p_rate">
+        </table>
+        <table tableName="p2p_repayment">
+        </table>
     </context>
 </generatorConfiguration>

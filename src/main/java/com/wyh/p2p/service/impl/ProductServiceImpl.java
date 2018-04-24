@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.wyh.p2p.generator.entities.P2pProduct;
 import com.wyh.p2p.generator.entities.P2pProductExample;
 import com.wyh.p2p.generator.mapperInterface.P2pProductMapper;
+import com.wyh.p2p.generator.mapperInterface.ext.InvestMapper;
 import com.wyh.p2p.service.ProductService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private P2pProductMapper productMapper;
 
+    @Autowired
+    private InvestMapper investMapper;
+
+    @Override
     public List<P2pProduct> viewList(int i) {
         P2pProductExample p2pProductExample = new P2pProductExample();
         try {
@@ -36,6 +41,7 @@ public class ProductServiceImpl implements ProductService{
         }
     }
 
+    @Override
     public List<P2pProduct> pageList(int page, int rows) {
         P2pProductExample example = new P2pProductExample();
         try{
@@ -47,6 +53,7 @@ public class ProductServiceImpl implements ProductService{
         }
     }
 
+    @Override
     public boolean save(P2pProduct p2pProduct) {
         try {
             return productMapper.insertSelective(p2pProduct) > 0;
@@ -56,6 +63,7 @@ public class ProductServiceImpl implements ProductService{
         }
     }
 
+    @Override
     public boolean delIds(List<Integer> idList) {
         P2pProductExample example = new P2pProductExample();
         try{
@@ -67,6 +75,7 @@ public class ProductServiceImpl implements ProductService{
         }
     }
 
+    @Override
     public boolean updateState(List<Integer> idArr, byte state) {
         try {
             P2pProductExample example = new P2pProductExample();
@@ -77,6 +86,26 @@ public class ProductServiceImpl implements ProductService{
         }catch (Exception e){
             logger.error("updateState 更新发布状态失败！"+e);
             throw new RuntimeException("updateState 更新发布状态失败！");
+        }
+    }
+
+    @Override
+    public P2pProduct getProById(int pid) {
+        try {
+            return productMapper.selectByPrimaryKey(pid);
+        }catch (Exception e){
+            logger.error("getProById 查看产品失败 ID："+pid+e);
+            throw new RuntimeException("getProById 查看产品失败 ID："+pid);
+        }
+    }
+
+    @Override
+    public boolean update(Integer id, double investMoney) {
+        try{
+            return investMapper.addMoney(investMoney,id) > 0;
+        }catch (Exception e){
+            logger.error("update 产品的投资金额失败！id:"+id+" ,money:"+investMoney+" ,error:"+e);
+            throw new RuntimeException("update 产品的投资金额失败！id:"+id+" ,money:"+investMoney);
         }
     }
 }

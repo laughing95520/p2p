@@ -23,50 +23,62 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private TCustomerMapper tCustomerMapper;
 
+	@Override
 	public List<Customer> list(Map<String, Object> map) {
 		return customerDao.list(map);
 	}
 
+	@Override
 	public Long getTotle() {
 		return customerDao.getTotle();
 	}
 
+	@Override
 	public Customer login(Customer customer) {
 		return customerDao.login(customer);
 	}
 
+	@Override
 	public int add(Customer customer) {
 		return customerDao.add(customer);
 	}
 
+	@Override
 	public Long getCustomerByName(String userName) {
 		return customerDao.getCustomerByName(userName);
 	}
 
+	@Override
 	public void del(int parseInt) {
 		customerDao.del(parseInt);
 	}
 
+	@Override
 	public boolean checkInfo(Customer customer) {
 		return ParamUtil.isNull(customer);
 	}
 
+	@Override
 	public void update(Customer customer) {
 		customerDao.update(customer);
 	}
 
+	@Override
 	public Customer getCustomerById(Integer id) {
 		return customerDao.getCustomerById(id);
 	}
 
+	@Override
 	public boolean updateById(TCustomer customer) {
 		return tCustomerMapper.updateByPrimaryKeySelective(customer)>0;
 	}
 
+	@Override
 	public boolean addBalance(Double money, Integer customerId) {
 		return customerDao.addBalance(money,customerId) > 0;
 	}
 
+	@Override
 	public boolean redBalance(double payMoney, int cusId) {
 		return customerDao.redBalance(payMoney,cusId) > 0;
 	}

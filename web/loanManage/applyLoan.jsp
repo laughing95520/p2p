@@ -176,7 +176,7 @@
 													value="<fmt:formatNumber value="${loanItem.rate *100} " pattern="0.00"/>"--%>
 
 													<input type="text" name="nlv" id="nlv" class="form-control" disabled="disabled"
-														   value="<fmt:formatNumber value="5" pattern="0.00"/>" />
+														   value="<fmt:formatNumber value="${rate}" pattern="0.00"/>" />
 													<div class="input-group-addon calc-addon">%</div>
 												</div>
 											</div>
@@ -642,6 +642,5 @@
 </script>
 <div style="text-align:center;">
 </div>
-</div>
-</div>
+<jsp:include page="/common/bottom.jsp"></jsp:include>
 </html>

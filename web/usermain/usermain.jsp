@@ -72,7 +72,7 @@ function idcard(obj){
 			  <div class="col-md-12 c"><p align="center">贷款统计</p></div>
 			</div>
 			<div class="row">
-			  <div class="col-md-3 c"><p align="right">总借金额</p></div>
+			  <div class="col-md-3 c"><p align="right">申请借款总金额</p></div>
 			  <div class="col-md-3 c"><p align="center">${loanInfoMap['allMoney'] }元</p></div>
 			  <div class="col-md-3 c"><p align="left">成功借款次数</p></div>
 			  <div class="col-md-3 c"><p align="left">${loanInfoMap['successNum'] }/${loanInfoMap['loanNum'] }</p></div>

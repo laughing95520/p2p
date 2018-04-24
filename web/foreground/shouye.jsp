@@ -37,10 +37,9 @@
 						</td>
 						<td style='vertical-align: middle;text-align: center;'>
 							<p>
-								<%--<a class="btn btn-success btn-lg" href="${pageContext.request.contextPath}/user/loan/loan.html?id=${prodItem.id}" role="button">
+								<a class="btn btn-success btn-lg" href="${pageContext.request.contextPath}/user/invest/investCal.html?id=${prodItem.id}" role="button">
 									我要投资
-								</a>--%>
-								我要投资
+								</a>
 							</p>
 						</td>
 					</tr>

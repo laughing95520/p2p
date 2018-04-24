@@ -22,6 +22,7 @@ public class GuaranteeServiceImpl implements GuaranteeService {
     @Autowired
     private P2pGuaranteeMapper p2pGuaranteeMapper;
 
+    @Override
     public boolean insertSelect(P2pGuarantee p2pGuarantee) {
         try{
         return p2pGuaranteeMapper.insertSelective(p2pGuarantee)>0;
@@ -31,6 +32,7 @@ public class GuaranteeServiceImpl implements GuaranteeService {
         }
     }
 
+    @Override
     public P2pGuarantee findByCusId(Integer id) {
 
         P2pGuaranteeExample example = new P2pGuaranteeExample();
@@ -47,6 +49,7 @@ public class GuaranteeServiceImpl implements GuaranteeService {
         }
     }
 
+    @Override
     public boolean updateSelect(P2pGuarantee p2pGuarantee) {
         P2pGuaranteeExample example = new P2pGuaranteeExample();
         example.createCriteria().andCustomerIdEqualTo(p2pGuarantee.getCustomerId());
@@ -59,6 +62,7 @@ public class GuaranteeServiceImpl implements GuaranteeService {
 
     }
 
+    @Override
     public boolean checkInfo(Integer id) {
         P2pGuarantee p2pGuarantee;
         P2pGuaranteeExample example = new P2pGuaranteeExample();

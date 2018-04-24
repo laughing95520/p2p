@@ -46,4 +46,20 @@ public interface ProductService {
      * @return
      */
     boolean updateState(List<Integer> idArr, byte state);
+
+    /**
+     * 根据ID 获取产品信息
+     * @param pid
+     * @return
+     */
+    P2pProduct getProById(int pid);
+
+
+    /**
+     * 投资后更改产品投资金额
+     * @param id
+     * @param investMoney
+     * @return
+     */
+    boolean update(Integer id, double investMoney);
 }

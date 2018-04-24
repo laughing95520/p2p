@@ -45,7 +45,19 @@ public interface CustomerService {
 
 	boolean updateById(TCustomer customer);
 
+	/**
+	 * 增加余额
+	 * @param money
+	 * @param customerId
+	 * @return
+	 */
 	boolean addBalance(Double money, Integer customerId);
 
+	/**
+	 * 减少余额
+	 * @param payMoney
+	 * @param cusId
+	 * @return
+	 */
     boolean redBalance(double payMoney, int cusId);
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wyh.p2p.generator.mapperInterface.ext.InvestMapper" >
+  <resultMap id="BaseResultMap" type="com.wyh.p2p.generator.entities.P2pInvest" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="income" property="income" jdbcType="DOUBLE" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="time_line" property="timeLine" jdbcType="INTEGER" />
+  </resultMap>
+
+  <update id="addMoney">
+    UPDATE `p2p_product`
+		SET `all_money` = `all_money` + #{money}
+		WHERE `id` = #{id};
+  </update>
+</mapper>

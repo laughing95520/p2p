@@ -18,7 +18,7 @@
     <!-- icon -->
     <link href="${pageContext.request.contextPath}/favicon0.ico" rel="SHORTCUT ICON">
     <!-- jquery -->
-    <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/bootstrap3/css/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap-datetimepicker.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap-datetimepicker.min.js"></script>
@@ -123,6 +123,9 @@
                 <div class="col-md-8" style="position: relative;top: 15px;">
                     <c:if test="${customerUser != null }">
                         <font size="4px">欢迎您:${customerUser.name }</font>
+                    </c:if>
+                    <c:if test="${customerUser.message != null}">
+                        <p style="color: red">还款消息提示：${customerUser.message}</p>
                     </c:if>
                 </div>
                 <nav class="main_nav">

@@ -29,7 +29,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FURGENT_PERSON_PHONE urgentPersonPhone,
 			FPASSWORD password,
 			balance balance,
-			income income
+			income income,
+			message message
 		FROM
 			T_CUSTOMER
 		<if test="start!=null and size!=null">
@@ -58,7 +59,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FURGENT_PERSON_PHONE urgentPersonPhone,
 			FPASSWORD password,
 			balance balance,
-			income income
+			income income,
+			message message
 		FROM 
 			T_CUSTOMER
 		WHERE
@@ -118,7 +120,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FBankNum fBankNum,
 			FURGENT_PERSON_PHONE urgentPersonPhone,
 			balance balance,
-			income income
+			income income,
+			message message
 		FROM 
 			T_CUSTOMER
 		WHERE

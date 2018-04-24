@@ -3,8 +3,6 @@ package com.wyh.p2p.controller;
 import com.wyh.p2p.util.ResponseUtil;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,12 +21,10 @@ public class GlobalExceptionHandler {
     private static Logger logger = Logger.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
-    ModelAndView resolveException(HttpRequest request1, HttpServletRequest request, HttpServletResponse response, Exception e) {
-        logger.error(e);
-        HttpHeaders headers = request1.getHeaders();
+    ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Exception e) {
+        logger.error("Contoller Exception error"+e);
         String requestType = request.getHeader("X-Requested-With");
         if("XMLHttpRequest".equals(requestType)){
-            System.out.println("AJAX请求..");
             JSONObject result = new JSONObject();
             result.put("success", false);
             try {
@@ -38,7 +34,6 @@ public class GlobalExceptionHandler {
             return null;
         }else{
             ModelAndView mv = new ModelAndView();
-            mv.addObject("error","error");
             mv.setViewName("error");
             return mv;
         }

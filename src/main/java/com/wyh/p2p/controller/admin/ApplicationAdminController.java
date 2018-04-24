@@ -7,10 +7,8 @@ import com.wyh.p2p.entities.PageBean;
 import com.wyh.p2p.entities.pojo.ApplyLoan;
 import com.wyh.p2p.generator.entities.P2pGuarantee;
 import com.wyh.p2p.generator.entities.P2pLoan;
-import com.wyh.p2p.service.ApplicationService;
-import com.wyh.p2p.service.ApplyLoanService;
-import com.wyh.p2p.service.CustomerService;
-import com.wyh.p2p.service.GuaranteeService;
+import com.wyh.p2p.generator.entities.P2pRepayment;
+import com.wyh.p2p.service.*;
 import com.wyh.p2p.util.ResponseUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -50,6 +48,9 @@ public class ApplicationAdminController {
 	@Autowired
 	private GuaranteeService guaranteeService;
 
+	@Autowired
+	private RepaymentService repaymentService;
+
 	@RequestMapping("/listLoan")
 	public void listLoan(@RequestParam("page") String page, @RequestParam("rows") String rows,
 						 HttpServletResponse response){
@@ -69,6 +70,7 @@ public class ApplicationAdminController {
 			jsonConfig.registerJsonValueProcessor(java.util.Date.class, new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
 			JSONArray jsonArray = JSONArray.fromObject(applyLoans, jsonConfig);
 			res.put("rows", jsonArray);
+			res.put("pages", p.getPages());
 			res.put("total", p.getTotal());
 			ResponseUtil.write(response, res);
 		}catch (Exception e ){
@@ -149,14 +151,25 @@ public class ApplicationAdminController {
 			int loanId = Integer.parseInt(id);
 			boolean flag;
 			boolean res=false;
+			//更改贷款申请状态以及审核
 			flag = applyLoanService.changeLoan(loanId, state, words);
 			if (flag) {
                 P2pLoan applyLoan = applyLoanService.findId(loanId);
                 if (applyLoan!=null) {
                     boolean cusFlag;
+                    //放贷成功后修改用户余额
                     cusFlag = customerService.addBalance(applyLoan.getMoney(),applyLoan.getCustomerId());
                     if (cusFlag){
-                        res = true;
+                    	//放贷成功，新增还款信息
+						double interest = applyLoan.getInterest()+applyLoan.getMoney();
+						P2pRepayment p2pRepayment = new P2pRepayment();
+						p2pRepayment.setLoanId(loanId);
+						p2pRepayment.setUid(applyLoan.getCustomerId());
+						p2pRepayment.setLoanMoney(applyLoan.getMoney());
+						p2pRepayment.setResidueMoney(interest);
+						p2pRepayment.setPayMoney(interest);
+						p2pRepayment.setRepayPeriods(0);
+                    	res = repaymentService.add(p2pRepayment);
                     }
                 }
 			}

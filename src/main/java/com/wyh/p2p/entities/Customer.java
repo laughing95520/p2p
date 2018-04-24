@@ -47,6 +47,16 @@ public class Customer {
 	//账户收益
 	private Double income;
 
+	private String message;
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 	public Double getBalance() {
 		return balance;
 	}

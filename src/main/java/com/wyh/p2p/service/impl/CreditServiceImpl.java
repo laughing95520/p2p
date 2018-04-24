@@ -16,26 +16,32 @@ public class CreditServiceImpl implements CreditService {
 	@Resource
 	private CreditDao creditDao;
 
+	@Override
 	public List<Credit> list(Map<String, Object> map) {
 		return creditDao.list(map);
 	}
 
+	@Override
 	public Long getTotle() {
 		return creditDao.getTotle();
 	}
 
+	@Override
 	public void update(Credit credit) {
 		creditDao.update(credit);
 	}
 
+	@Override
 	public void del(int parseInt) {
 		creditDao.del(parseInt);
 	}
 
+	@Override
 	public void add(Credit credit) {
 		creditDao.add(credit);
 	}
 
+	@Override
 	public Credit getByCustomerId(Integer id) {
 		return creditDao.getByCustomerId(id);
 	}

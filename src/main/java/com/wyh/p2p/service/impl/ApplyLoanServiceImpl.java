@@ -25,6 +25,7 @@ public class ApplyLoanServiceImpl implements ApplyLoanService {
     @Resource
     private P2pLoanMapper p2pLoanMapper;
 
+    @Override
     public boolean insertApply(P2pLoan p2pLoan) {
         try {
             return p2pLoanMapper.insertSelective(p2pLoan)>0;
@@ -34,6 +35,7 @@ public class ApplyLoanServiceImpl implements ApplyLoanService {
         }
     }
 
+    @Override
     public List<P2pLoan> findByCusId(int cusId) {
         try {
             P2pLoanExample example = new P2pLoanExample();
@@ -45,6 +47,7 @@ public class ApplyLoanServiceImpl implements ApplyLoanService {
         }
     }
 
+    @Override
     public List<P2pLoan> list(int page,int rows) {
         try{
             P2pLoanExample example = new P2pLoanExample();
@@ -57,6 +60,7 @@ public class ApplyLoanServiceImpl implements ApplyLoanService {
         }
     }
 
+    @Override
     public boolean changeLoan(int loanId, byte state, String words) {
         try{
             P2pLoan p2pLoan = new P2pLoan();
@@ -71,6 +75,7 @@ public class ApplyLoanServiceImpl implements ApplyLoanService {
         }
     }
 
+    @Override
     public P2pLoan findId(int loanId) {
         try{
             return p2pLoanMapper.selectByPrimaryKey(loanId);
