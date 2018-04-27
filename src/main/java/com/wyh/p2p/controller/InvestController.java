@@ -3,6 +3,7 @@ package com.wyh.p2p.controller;
 import com.wyh.p2p.entities.Customer;
 import com.wyh.p2p.generator.entities.P2pInvest;
 import com.wyh.p2p.generator.entities.P2pProduct;
+import com.wyh.p2p.service.CustomerService;
 import com.wyh.p2p.service.InvestService;
 import com.wyh.p2p.service.ProductService;
 import com.wyh.p2p.util.ResponseUtil;
@@ -38,6 +39,9 @@ public class InvestController {
 
     @Autowired
     private InvestService investService;
+
+    @Autowired
+    private CustomerService customerService;
 
     @RequestMapping("/investCal")
     public ModelAndView invest(HttpSession session, @RequestParam("id") String id) {
@@ -79,9 +83,18 @@ public class InvestController {
             LocalDateTime endLocal = localDateTime.plusMonths(timeLine);
             p2pInvest.setStartDate(changToDate(localDateTime));
             p2pInvest.setEndDate(changToDate(endLocal));
-            flag = investService.addInvest(p2pInvest);
-            if (flag) {
-                flag = productService.update(p2pProduct.getId(), investMoney);
+            //todo:检查用户余额是否够投资金额
+            double balance = customerService.getCustomerById(uid).getBalance();
+            if (investMoney <= balance){
+                flag = customerService.redBalance(investMoney,uid);
+                if (flag) {
+                    flag = investService.addInvest(p2pInvest);
+                    if (flag) {
+                        flag = productService.update(p2pProduct.getId(), investMoney);
+                    }
+                }
+            }else {
+                result.put("message","余额不足！请联系管理员");
             }
         }catch (Exception e){
             logger.error("用户投资出错！投资产品pid:"+pid+e);

@@ -4,6 +4,7 @@ import com.wyh.p2p.entities.Credit;
 import com.wyh.p2p.entities.Customer;
 import com.wyh.p2p.entities.CustomerDetail;
 import com.wyh.p2p.generator.entities.P2pLoan;
+import com.wyh.p2p.generator.entities.P2pMessage;
 import com.wyh.p2p.service.*;
 import com.wyh.p2p.util.ResponseUtil;
 import net.sf.json.JSONObject;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,11 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 客户Controller
@@ -56,6 +56,42 @@ public class CustomerController {
 
 	@Autowired
 	private ApplyLoanService applyLoanService;
+
+	@RequestMapping("/changeState")
+	public String changeState(@RequestParam("ids")String ids, HttpSession session,HttpServletResponse response) throws IOException {
+		Customer customer = (Customer) session.getAttribute("customerUser");
+		int uid = customer.getId();
+		boolean flag;
+		JSONObject result = new JSONObject();
+		String[] id = ids.split(",");
+		List<Integer> idlist = new ArrayList<>(10);
+		for (String fid : id) {
+			idlist.add(Integer.parseInt(fid));
+		}
+		flag =customerService.changeMessageState(idlist,uid);
+		result.put("success",flag);
+		ResponseUtil.write(response,result);
+		return null;
+	}
+
+
+	@RequestMapping("/messageList")
+	public String messageList(HttpSession session,HttpServletResponse response) throws IOException {
+		JSONObject result = new JSONObject();
+		Customer customer = (Customer) session.getAttribute("customerUser");
+		if (customer!=null){
+			List<P2pMessage> messList = customerService.getMessageByUid(customer.getId());
+			if (messList.size()>0){
+				result.put("success",true);
+				result.put("messages",messList);
+			}
+		}else{
+			result.put("success",false);
+		}
+		ResponseUtil.write(response,result);
+		return null;
+	}
+
 
 	@RequestMapping("/index")
 	public ModelAndView index(HttpSession session) {

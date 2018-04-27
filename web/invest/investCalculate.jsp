@@ -273,7 +273,11 @@
             if(data.success){
                 alert("投资成功！")
             }else{
-                alert("投资失败！")
+                if(data.message!=null) {
+                    alert(data.message + "投资失败！");
+                }else {
+                alert("投资失败！");
+                }
             }
         })
     });

@@ -158,7 +158,7 @@
 						关闭
 					</button>
 					<button type="button" class="btn btn-primary" onclick="save()">
-						提交更改
+						确认还款
 					</button>
 				</div>
 			</div><!-- /.modal-content -->

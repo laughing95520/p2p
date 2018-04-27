@@ -14,7 +14,6 @@
     <result column="FPASSWORD" property="fpassword" jdbcType="VARCHAR" />
     <result column="balance" property="balance" jdbcType="DOUBLE" />
     <result column="income" property="income" jdbcType="DOUBLE" />
-    <result column="message" property="message" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -76,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List" >
     FID, FNAME, FBIRTHDAY, FSEX, FID_NUM, FPHONE_NUM, FADDRESS, FBankNum, FURGENT_PERSON_PHONE, 
-    FPASSWORD, balance, income, message
+    FPASSWORD, balance, income
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wyh.p2p.generator.entities.TCustomerExample" >
     select
@@ -112,13 +111,13 @@
     insert into t_customer (FID, FNAME, FBIRTHDAY, 
       FSEX, FID_NUM, FPHONE_NUM, 
       FADDRESS, FBankNum, FURGENT_PERSON_PHONE, 
-      FPASSWORD, balance, income, 
-      message)
+      FPASSWORD, balance, income
+      )
     values (#{fid,jdbcType=INTEGER}, #{fname,jdbcType=VARCHAR}, #{fbirthday,jdbcType=TIMESTAMP}, 
       #{fsex,jdbcType=VARCHAR}, #{fidNum,jdbcType=BIGINT}, #{fphoneNum,jdbcType=BIGINT}, 
       #{faddress,jdbcType=VARCHAR}, #{fbanknum,jdbcType=VARCHAR}, #{furgentPersonPhone,jdbcType=BIGINT}, 
-      #{fpassword,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE}, #{income,jdbcType=DOUBLE}, 
-      #{message,jdbcType=VARCHAR})
+      #{fpassword,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE}, #{income,jdbcType=DOUBLE}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.wyh.p2p.generator.entities.TCustomer" >
     insert into t_customer
@@ -159,9 +158,6 @@
       <if test="income != null" >
         income,
       </if>
-      <if test="message != null" >
-        message,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="fid != null" >
@@ -199,9 +195,6 @@
       </if>
       <if test="income != null" >
         #{income,jdbcType=DOUBLE},
-      </if>
-      <if test="message != null" >
-        #{message,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -250,9 +243,6 @@
       <if test="record.income != null" >
         income = #{record.income,jdbcType=DOUBLE},
       </if>
-      <if test="record.message != null" >
-        message = #{record.message,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -271,8 +261,7 @@
       FURGENT_PERSON_PHONE = #{record.furgentPersonPhone,jdbcType=BIGINT},
       FPASSWORD = #{record.fpassword,jdbcType=VARCHAR},
       balance = #{record.balance,jdbcType=DOUBLE},
-      income = #{record.income,jdbcType=DOUBLE},
-      message = #{record.message,jdbcType=VARCHAR}
+      income = #{record.income,jdbcType=DOUBLE}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -313,9 +302,6 @@
       <if test="income != null" >
         income = #{income,jdbcType=DOUBLE},
       </if>
-      <if test="message != null" >
-        message = #{message,jdbcType=VARCHAR},
-      </if>
     </set>
     where FID = #{fid,jdbcType=INTEGER}
   </update>
@@ -331,8 +317,7 @@
       FURGENT_PERSON_PHONE = #{furgentPersonPhone,jdbcType=BIGINT},
       FPASSWORD = #{fpassword,jdbcType=VARCHAR},
       balance = #{balance,jdbcType=DOUBLE},
-      income = #{income,jdbcType=DOUBLE},
-      message = #{message,jdbcType=VARCHAR}
+      income = #{income,jdbcType=DOUBLE}
     where FID = #{fid,jdbcType=INTEGER}
   </update>
 </mapper>

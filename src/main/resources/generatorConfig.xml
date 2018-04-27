@@ -61,5 +61,7 @@
         </table>
         <table tableName="p2p_repayment">
         </table>
+        <table tableName="p2p_message">
+        </table>
     </context>
 </generatorConfiguration>

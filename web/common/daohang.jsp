@@ -106,31 +106,99 @@
                     }
                 },'json')
             });
-        })
+        });
+
+        function readMess() {
+            $.ajax({
+                url: "${pageContext.request.contextPath}/user/customer/messageList.html",
+                success: function(data){
+                    if(data.success){
+                        $("#modalMessage").empty();
+                        var arr = data.messages;
+                        for(var i=0;i<arr.length;i++){
+                            var text = arr[i].message;
+                            $("#modalMessage").append("<li value="+arr[i].id+">"+text+"</li>");
+                        }
+                    }else {
+                        $("#messageModal").modal('hide');
+                    }
+                },
+                dataType: "json"
+            });
+        }
+
+        function changeState() {
+            var ulArr = $("#modalMessage").children();
+            var ids = [];
+            for(var i= 0;i<ulArr.length;i++){
+                var id = ulArr[i].value;
+                ids.push(id);
+            }
+            var paramIds = ids.join(",");
+            $.ajax({
+                url: "${pageContext.request.contextPath}/user/customer/changeState.html",
+                type:"post",
+                data:{ids:paramIds},
+                success: function(data){
+                    window.location.href="${pageContext.request.contextPath}/index.html";
+                },
+                dataType: "json"
+            });
+
+
+
+        }
     </script>
 
 </head>
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-7">
             <iframe width="700" scrolling="no" height="70" frameborder="0" allowtransparency="true"
                     src="http://i.tianqi.com/index.php?c=code&id=2&bgc=%23&bdc=%23&icon=5&num=3">
             </iframe>
         </div>
+        <div class="col-md-2">
+            <c:if test="${messageNUm!= null}">
+                <span onclick="readMess()"  data-toggle="modal" data-target="#messageModal">
+                    <p style="color: red;text-decoration:underline">还款提醒：${messageNUm}条未读</p>
+                </span>
+            </c:if>
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messModalLabel" aria-hidden="true" backdrop="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="messModalLabel">
+                            还款提醒消息：
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="modalMessage">
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="changeState()">
+                            已读
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-8" style="position: relative;top: 15px;">
                     <c:if test="${customerUser != null }">
                         <font size="4px">欢迎您:${customerUser.name }</font>
                     </c:if>
-                    <c:if test="${customerUser.message != null}">
-                        <p style="color: red">还款消息提示：${customerUser.message}</p>
-                    </c:if>
                 </div>
                 <nav class="main_nav">
                     <ul style="list-style-type: none">
-
                             <c:if test="${customerUser == null }">
                                 <li>
                                 <a style="text-decoration:none" class="cd-signin" href="#0">登录</a>

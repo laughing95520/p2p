@@ -2,6 +2,7 @@ package com.wyh.p2p.controller;
 
 import com.wyh.p2p.entities.Credit;
 import com.wyh.p2p.entities.Customer;
+import com.wyh.p2p.generator.entities.P2pMessage;
 import com.wyh.p2p.generator.entities.P2pProduct;
 import com.wyh.p2p.service.CreditService;
 import com.wyh.p2p.service.CustomerService;
@@ -28,7 +29,6 @@ public class IndexController {
 	@Resource
 	private CreditService creditService;
 
-
 	@Autowired
     private ProductService productService;
 
@@ -36,6 +36,13 @@ public class IndexController {
 	public ModelAndView index(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		List<P2pProduct> products = productService.viewList(0);
+		Customer customer = (Customer) session.getAttribute("customerUser");
+		if (customer != null) {
+			List<P2pMessage> userMessage = customerService.getMessageByUid(customer.getId());
+			if (userMessage.size() > 0){
+				mv.addObject("messageNUm",userMessage.size());
+			}
+		}
 		session.setAttribute("productList", products);
 		mv.addObject("mainTempIndex", 1);
 		mv.setViewName("mainTemp");

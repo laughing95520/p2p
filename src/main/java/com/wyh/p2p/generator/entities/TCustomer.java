@@ -27,8 +27,6 @@ public class TCustomer {
 
     private Double income;
 
-    private String message;
-
     public Integer getFid() {
         return fid;
     }
@@ -123,13 +121,5 @@ public class TCustomer {
 
     public void setIncome(Double income) {
         this.income = income;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message == null ? null : message.trim();
     }
 }

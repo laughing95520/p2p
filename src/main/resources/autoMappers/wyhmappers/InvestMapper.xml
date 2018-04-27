@@ -14,7 +14,7 @@
 
   <update id="addMoney">
     UPDATE `p2p_product`
-		SET `all_money` = `all_money` + #{money}
-		WHERE `id` = #{id};
+	SET `all_money` = `all_money` + #{money}
+	WHERE `id` = #{id};
   </update>
 </mapper>

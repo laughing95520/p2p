@@ -4,8 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.wyh.p2p.entities.Customer;
 import com.wyh.p2p.entities.pojo.RepaymentPojo;
 import com.wyh.p2p.generator.entities.P2pLoan;
+import com.wyh.p2p.generator.entities.P2pMessage;
 import com.wyh.p2p.generator.entities.P2pRepayment;
-import com.wyh.p2p.generator.entities.TCustomer;
 import com.wyh.p2p.service.ApplyLoanService;
 import com.wyh.p2p.service.CustomerService;
 import com.wyh.p2p.service.RepaymentService;
@@ -117,10 +117,10 @@ public class RepaymentAdminController {
     public String sendMessage(@RequestParam("id")String id,@RequestParam("message")String message,
                               HttpServletResponse response) throws IOException {
         int uid = Integer.parseInt(id);
-        TCustomer customer = new TCustomer();
-        customer.setMessage(message);
-        customer.setFid(uid);
-        flag = customerService.updateById(customer);
+        P2pMessage pMessage = new P2pMessage();
+        pMessage.setMessage(message);
+        pMessage.setUserid(uid);
+        flag = customerService.addMessage(pMessage);
         result.put("success",flag);
         ResponseUtil.write(response,result);
         return null;

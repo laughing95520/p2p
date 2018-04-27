@@ -1,6 +1,7 @@
 package com.wyh.p2p.service;
 
 import com.wyh.p2p.entities.Customer;
+import com.wyh.p2p.generator.entities.P2pMessage;
 import com.wyh.p2p.generator.entities.TCustomer;
 
 import java.util.List;
@@ -60,4 +61,20 @@ public interface CustomerService {
 	 * @return
 	 */
     boolean redBalance(double payMoney, int cusId);
+
+	/**
+	 * 新增提醒还款消息
+	 * @param p2pMessage
+	 * @return
+	 */
+	boolean addMessage(P2pMessage p2pMessage);
+
+	/**
+	 * 获取用户的提示消息
+	 * @param id
+	 * @return
+	 */
+	List<P2pMessage> getMessageByUid(Integer id);
+
+	boolean changeMessageState(List<Integer> ids,int uid);
 }
