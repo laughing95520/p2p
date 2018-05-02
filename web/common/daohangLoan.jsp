@@ -10,7 +10,13 @@
             if ($("#setActiveLoanTemp").val() == 1) {
                 $("#wddk").addClass('activePerson');
             } else if ($("#setActiveLoanTemp").val() == 2) {
+                $("#wdtz").addClass('activePerson');
+            } else if ($("#setActiveLoanTemp").val() == 3){
                 $("#dkzl").addClass('activePerson');
+            } else if ($("#setActiveLoanTemp").val() == 4){
+                $("#dksq").addClass('activePerson');
+            } else if ($("#setActiveLoanTemp").val() == 5){
+                $("#hk").addClass('activePerson');
             }
         })
     </script>
@@ -22,6 +28,9 @@
     <ul class="nav nav-tabs">
         <li id="wddk" role="presentation">
             <a href="${pageContext.request.contextPath}/user/loan/myloan.html">我的贷款</a>
+        </li>
+        <li id="wdtz" role="presentation">
+            <a href="${pageContext.request.contextPath}/user/invest/myInvest.html">我的投资</a>
         </li>
         <li id="dkzl" role="presentation">
             <a href="${pageContext.request.contextPath}/user/loan/loaninfo.html">贷款资料</a>

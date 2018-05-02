@@ -104,6 +104,7 @@
 	<div class="easyui-accordion" data-options="fit:true,border:false">
 		<div title="理财贷款管理"  data-options="iconCls:'icon-plgl'" style="padding:10px">
 			<a href="javascript:openTab('投资理财项目','productItems.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">投资理财项目</a>
+			<a href="javascript:openTab('用户投资管理','investList.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">用户投资管理</a>
 			<a href="javascript:openTab('贷款申请','loanList.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">贷款申请</a>
 			<a href="javascript:openTab('还款监督提醒','repayment.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">还款监督提醒</a>
 			<a href="javascript:openTab('贷款利率管理','rateManage.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px;">贷款利率管理</a>

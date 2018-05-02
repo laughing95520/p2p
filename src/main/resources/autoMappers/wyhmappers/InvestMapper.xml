@@ -12,9 +12,36 @@
     <result column="time_line" property="timeLine" jdbcType="INTEGER" />
   </resultMap>
 
+  <resultMap id="InvestResultMap" type="com.wyh.p2p.entities.pojo.InvestPojo">
+    <result column="iid" property="id"/>
+    <result column="id" property="pid"/>
+    <result column="uid" property="uid"/>
+    <result column="title" property="title"/>
+    <result column="rate" property="rate"/>
+    <result column="money" property="investMoney"/>
+    <result column="income" property="income"/>
+    <result column="end_date" property="incomeDate"/>
+  </resultMap>
+
   <update id="addMoney">
     UPDATE `p2p_product`
 	SET `all_money` = `all_money` + #{money}
 	WHERE `id` = #{id};
   </update>
+
+  <select id="investListByUid" resultMap="InvestResultMap">
+    SELECT a.iid,b.id,b.title,b.rate,a.money,a.income,a.end_date
+    FROM p2p_invest AS a
+    LEFT JOIN p2p_product AS b
+    ON a.pid = b.id
+    WHERE a.uid = #{id} AND a.state = 0
+  </select>
+
+  <select id="pageList" resultMap="InvestResultMap">
+    SELECT a.iid,b.id,a.uid,b.title,b.rate,a.money,a.income,a.end_date
+    FROM p2p_invest AS a
+    LEFT JOIN p2p_product AS b
+    ON a.pid = b.id
+    WHERE a.state = 0
+  </select>
 </mapper>

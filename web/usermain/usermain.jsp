@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -55,9 +56,13 @@ function idcard(obj){
 			  	<br>
 				<p>用户名　:&nbsp;&nbsp;${customer.name}</p>
 				<br>
-				<p>账户余额　:&nbsp;&nbsp;${customer.balance }</p>
+				<p>账户余额　:&nbsp;&nbsp;
+					<fmt:formatNumber type="number" value="${customer.balance}" pattern="0.00"/>
+				</p>
 				<br>
-				<p>投资收益　:&nbsp;&nbsp;${customer.income }</p>
+				<p>投资收益　:&nbsp;&nbsp;
+					<fmt:formatNumber type="number" value="${customer.income }" pattern="0.00"/>
+				</p>
 				<br>
 				<p><a href="${pageContext.request.contextPath}/user/loan/myloan.html">贷款统计:</a>&nbsp;&nbsp;共${loanInfoMap['loanNum'] }条贷款记录</p>
 			  </div>

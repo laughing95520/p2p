@@ -1,6 +1,7 @@
 package com.wyh.p2p.controller;
 
 import com.wyh.p2p.entities.Customer;
+import com.wyh.p2p.entities.pojo.InvestPojo;
 import com.wyh.p2p.generator.entities.P2pInvest;
 import com.wyh.p2p.generator.entities.P2pProduct;
 import com.wyh.p2p.service.CustomerService;
@@ -24,6 +25,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author wangyihang
@@ -42,6 +44,19 @@ public class InvestController {
 
     @Autowired
     private CustomerService customerService;
+
+    @RequestMapping("/myInvest")
+    public ModelAndView myInvest(HttpSession session){
+        Customer customer = (Customer) session.getAttribute("customerUser");
+        List<InvestPojo> resList = investService.getList(customer.getId());
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("invests",resList);
+        mv.setViewName("invest/myInvest");
+        mv.addObject("mainTempIndex", 3);
+        mv.addObject("loanIndex", 2);
+        return mv;
+    }
+
 
     @RequestMapping("/investCal")
     public ModelAndView invest(HttpSession session, @RequestParam("id") String id) {
@@ -72,6 +87,7 @@ public class InvestController {
             double investEar = investMoney*(rate/100/12)*timeLine;
             BigDecimal b  =  new  BigDecimal(investEar);
             investEar  =  b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+            investMoney = new BigDecimal(investMoney).setScale(2).doubleValue();
             Customer customer = (Customer) session.getAttribute("customerUser");
             int uid = customer.getId();
             p2pInvest.setPid(pIntId);

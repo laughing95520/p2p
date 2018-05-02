@@ -124,6 +124,8 @@ public class LoanController {
             mv.addObject("resultList",resultList);
         }
         mv.setViewName("loanManage/myRepay");
+        mv.addObject("mainTempIndex", 3);
+        mv.addObject("loanIndex", 5);
         return mv;
     }
 
@@ -181,6 +183,7 @@ public class LoanController {
         ModelAndView mv = new ModelAndView();
         mv.addObject("rateList",pRateList);
         mv.addObject("mainTempIndex", 3);
+        mv.addObject("loanIndex", 4);
         mv.setViewName("loanManage/loanType");
         return mv;
     }
@@ -216,7 +219,10 @@ public class LoanController {
                 if (guaranteeService.checkInfo(cusId)) {
                     int guaId = guaranteeService.findByCusId(cusId).getId();
                     p2pLoan.setGuaranteeId(guaId);
-                    p2pLoan.setMoney(Double.valueOf(money));
+                    double loanMoney = Double.valueOf(money);
+                    BigDecimal b = new BigDecimal(loanMoney);
+                    loanMoney = b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+                    p2pLoan.setMoney(loanMoney);
                     p2pLoan.setLoanMonth(Integer.valueOf(loanMonth));
                     p2pLoan.setRate(Float.valueOf(rate));
                     p2pLoan.setRepayWay(Byte.valueOf(repayWay));
@@ -271,7 +277,7 @@ public class LoanController {
                 mv.addObject("imgPath", p2pGuarantee.getPhotoPath());
             }
             mv.addObject("mainTempIndex", 3);
-            mv.addObject("loanIndex", 2);
+            mv.addObject("loanIndex", 3);
             mv.setViewName("loanManage/guarantee");
             return mv;
         } catch (Exception e) {

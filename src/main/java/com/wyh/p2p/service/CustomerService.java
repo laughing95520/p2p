@@ -77,4 +77,12 @@ public interface CustomerService {
 	List<P2pMessage> getMessageByUid(Integer id);
 
 	boolean changeMessageState(List<Integer> ids,int uid);
+
+	/**
+	 * 归还投资金额及收益
+	 * @param allMoney
+	 * @param income
+	 * @param uid
+	 */
+    void addInvestMoney(double allMoney, double income, Integer uid);
 }

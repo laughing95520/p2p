@@ -121,6 +121,10 @@ public class CustomerServiceImpl implements CustomerService {
 			logger.error("更新还款提醒消息出错！uid:"+uid+"error:"+e);
 			throw new RuntimeException("更新还款提醒消息出错！uid:"+uid);
 		}
+	}
 
+	@Override
+	public void addInvestMoney(double allMoney, double income, Integer uid) {
+		//todo:add 用户余额和收益
 	}
 }

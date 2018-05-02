@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,8 @@ public class CustomerAdminController {
 			int typeInt = Integer.parseInt(type);
 			int cusId = Integer.parseInt(id);
 			double payMoney = Double.parseDouble(money);
+			BigDecimal b = new BigDecimal(payMoney);
+			payMoney = b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
 			boolean flag = false;
 			if (typeInt == 1) {
 				//add
