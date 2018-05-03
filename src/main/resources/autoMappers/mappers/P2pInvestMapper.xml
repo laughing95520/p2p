@@ -10,6 +10,7 @@
     <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
     <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
     <result column="time_line" property="timeLine" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    iid, pid, uid, income, money, start_date, end_date, time_line
+    iid, pid, uid, income, money, start_date, end_date, time_line, state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wyh.p2p.generator.entities.P2pInvestExample" >
     select
@@ -105,10 +106,12 @@
   <insert id="insert" parameterType="com.wyh.p2p.generator.entities.P2pInvest" >
     insert into p2p_invest (iid, pid, uid, 
       income, money, start_date, 
-      end_date, time_line)
+      end_date, time_line, state
+      )
     values (#{iid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
       #{income,jdbcType=DOUBLE}, #{money,jdbcType=DOUBLE}, #{startDate,jdbcType=TIMESTAMP}, 
-      #{endDate,jdbcType=TIMESTAMP}, #{timeLine,jdbcType=INTEGER})
+      #{endDate,jdbcType=TIMESTAMP}, #{timeLine,jdbcType=INTEGER}, #{state,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.wyh.p2p.generator.entities.P2pInvest" >
     insert into p2p_invest
@@ -137,6 +140,9 @@
       <if test="timeLine != null" >
         time_line,
       </if>
+      <if test="state != null" >
+        state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="iid != null" >
@@ -162,6 +168,9 @@
       </if>
       <if test="timeLine != null" >
         #{timeLine,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -198,6 +207,9 @@
       <if test="record.timeLine != null" >
         time_line = #{record.timeLine,jdbcType=INTEGER},
       </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -212,7 +224,8 @@
       money = #{record.money,jdbcType=DOUBLE},
       start_date = #{record.startDate,jdbcType=TIMESTAMP},
       end_date = #{record.endDate,jdbcType=TIMESTAMP},
-      time_line = #{record.timeLine,jdbcType=INTEGER}
+      time_line = #{record.timeLine,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +254,9 @@
       <if test="timeLine != null" >
         time_line = #{timeLine,jdbcType=INTEGER},
       </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=TINYINT},
+      </if>
     </set>
     where iid = #{iid,jdbcType=INTEGER}
   </update>
@@ -252,7 +268,8 @@
       money = #{money,jdbcType=DOUBLE},
       start_date = #{startDate,jdbcType=TIMESTAMP},
       end_date = #{endDate,jdbcType=TIMESTAMP},
-      time_line = #{timeLine,jdbcType=INTEGER}
+      time_line = #{timeLine,jdbcType=INTEGER},
+      state = #{state,jdbcType=TINYINT}
     where iid = #{iid,jdbcType=INTEGER}
   </update>
 </mapper>

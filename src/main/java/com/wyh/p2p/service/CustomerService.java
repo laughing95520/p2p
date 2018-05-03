@@ -84,5 +84,5 @@ public interface CustomerService {
 	 * @param income
 	 * @param uid
 	 */
-    void addInvestMoney(double allMoney, double income, Integer uid);
+    boolean addInvestMoney(double allMoney, double income, Integer uid);
 }

@@ -67,6 +67,18 @@ public class InvestServiceImpl implements InvestService {
             logger.error("获得投资记录失败！id"+id+"error:"+e);
             throw new RuntimeException("获得投资记录失败！id"+id);
         }
+    }
 
+    @Override
+    public boolean changeState(int iid) {
+        try{
+            P2pInvest p2pInvest = new P2pInvest();
+            p2pInvest.setIid(iid);
+            p2pInvest.setState((byte) 1);
+            return p2pInvestMapper.updateByPrimaryKeySelective(p2pInvest) > 0;
+        }catch (Exception e){
+            logger.error("更改投资记录状态出错！iid:"+iid+"error:"+e);
+            throw new RuntimeException("更改投资记录状态出错！iid"+iid);
+        }
     }
 }

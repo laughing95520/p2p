@@ -124,7 +124,13 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public void addInvestMoney(double allMoney, double income, Integer uid) {
+	public boolean addInvestMoney(double allMoney, double income, Integer uid) {
 		//todo:add 用户余额和收益
+		try{
+			return customerDao.addInvest(allMoney,income,uid) > 0;
+		}catch (Exception e){
+			logger.error("归还用户投资出错！uid:"+uid+"error"+e);
+			throw new RuntimeException("归还用户余额和收益出错！");
+		}
 	}
 }

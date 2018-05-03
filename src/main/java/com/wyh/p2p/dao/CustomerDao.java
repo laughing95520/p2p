@@ -63,4 +63,13 @@ public interface CustomerDao {
 	int addBalance(@Param("money") double money,@Param("cusId") int cusId);
 
     int redBalance(@Param("money") double money,@Param("cusId") int cusId);
+
+	/**
+	 * 归还用户投资
+	 * @param balance
+	 * @param income
+	 * @param uid
+	 * @return
+	 */
+	int addInvest(@Param("balance")double balance,@Param("income")double income,@Param("id") int uid);
 }

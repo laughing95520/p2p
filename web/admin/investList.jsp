@@ -48,27 +48,14 @@
                         id: id,
                     }, function (result) {
                         if (result.success) {
-                            $.messager.alert("系统提示", "已设置成功！");
+                            $.messager.alert("系统提示", "归还成功！");
                             $("#dg").datagrid("reload");
                         } else {
-                            $.messager.alert("系统提示", "设置失败！");
+                            $.messager.alert("系统提示", "归还失败！");
                         }
                     }, "json");
                 }
             });
-        }
-
-
-        function close() {
-            $('#dlg').dialog('close');
-            resetValue();
-        }
-
-        function resetValue(){
-            $("#title").val('');
-            $("#lowestMoney").val('');
-            $("#rate").val('');
-            $("#timeline").val('');
         }
 
     </script>
@@ -104,52 +91,6 @@
     </div>
 </div>
 
-<div id="dlg" class="easyui-dialog" data-options="iconCls:'icon-save',buttons:'#dlg-buttons'"
-     style="width: 400px;height: 310px;padding: 10px 20px" closed="true">
-    <form method="post" id="fm">
-        <table cellspacing="8px">
-            <tr>
-                <td>产品名字:</td>
-                <td>
-                    <input type="text" id="title" name="title" class="easyui-validatebox" required='true'/>
-                </td>
-            </tr>
-            <tr>
-                <td>最低投资金额:</td>
-                <td>
-                    <input type="text" id="lowestMoney" name="lowestMoney" class="easyui-validatebox" required='true'/>
-                    元
-                </td>
-            </tr>
-            <tr>
-                <td>项目期待年利率</td>
-                <td>
-                    <input type="text" id="rate" name="rate" class="easyui-validatebox" required='true'/> %
-                </td>
-            </tr>
-            <tr>
-                <td>项目周期(单位:月)</td>
-                <td>
-                    <input type="text" id="timeline" name="timeline" class="easyui-validatebox" required='true'/> 月
-                </td>
-            </tr>
-            <tr>
-                <td>是否发布</td>
-                <td>
-                    <select id='state' name='state' style="width: 130px">
-                        <option value="0">发布</option>
-                        <option value="1">不发布</option>
-                    </select>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
-
-<div id="dlg-buttons">
-    <a href="javascript:save()" class="easyui-linkbutton">保存</a>
-    <a href="javascript:close()" class="easyui-linkbutton">取消</a>
-</div>
 
 </body>
 </html>

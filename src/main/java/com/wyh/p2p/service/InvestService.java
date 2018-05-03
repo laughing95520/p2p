@@ -39,4 +39,11 @@ public interface InvestService {
      * @return
      */
     P2pInvest getByIid(int id);
+
+    /**
+     * 根据id更改投资记录的状态
+     * @param iid
+     * @return
+     */
+    boolean changeState(int iid);
 }

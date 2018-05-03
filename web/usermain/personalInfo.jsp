@@ -39,12 +39,12 @@
                 $("#education").val(4);
             }
             var date = new Date();
-            var birthday = $("#birth").val();
+            var birthday = $('#birth').val();
             if (birthday != "") {
                 date = new Date(birthday);
             }
             birthday = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-            $("#birth").val(birthday);
+            $('#birth').val(birthday);
         })
     </script>
 </head>
@@ -64,7 +64,7 @@
             </div>
             <hr>
             <div class="input-group">
-                <span class="input-group-addon">性别　　　</span>
+                <span class="input-group-addon">性别</span>
                 <select class="form-control" name='sex' id="sex">
                     <option value="0">男</option>
                     <option value="1">女</option>
@@ -74,19 +74,17 @@
             <div class="input-group">
 
                 <span class="input-group-addon">出生日期　</span>
-                <div class="input-append date form_datetime">
-                <input type="text" class="form-control" id="birth" value="${customer.birthday }"
-                　data-date-format="yyyy-mm-dd" onclick="text()" readonly name='birthday'/>
+                <div class="input-append date form_datetime" id="datetime">
+                    <input type="text" class="form-control" id="birth" onclick="text()" name='birthday' value="${customer.birthday }" readonly />
                 </div>
             </div>
             <script type="text/javascript">
                 function text() {
-                    $('.form_datetime').datetimepicker({
+                    $('#birth').datetimepicker({
                             format: "yyyy-mm-dd",
-                            autoclose: true,
+                            minView: 'month',
                             todayBtn: true,
-                            language: 'zh-CN',
-                            pickerPosition: "bottom-left"
+                            autoclose: true,
                         }
                     );
                 }
@@ -164,6 +162,5 @@
 <jsp:include page="/common/bottom.jsp"></jsp:include>
 <input type="hidden" id="setSex" value="${customer.sex}">
 <input type="hidden" id="seteducation" value="${customerDetail.education }">
-<input type="hidden" id="birthdayTemp" value="${customer.birthday }">
 </body>
 </html>

@@ -19,6 +19,8 @@ public class P2pInvest {
 
     private Integer timeLine;
 
+    private Byte state;
+
     public Integer getIid() {
         return iid;
     }
@@ -81,5 +83,13 @@ public class P2pInvest {
 
     public void setTimeLine(Integer timeLine) {
         this.timeLine = timeLine;
+    }
+
+    public Byte getState() {
+        return state;
+    }
+
+    public void setState(Byte state) {
+        this.state = state;
     }
 }

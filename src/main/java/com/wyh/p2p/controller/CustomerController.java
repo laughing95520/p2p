@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -177,7 +179,11 @@ public class CustomerController {
 	}
 
 	@RequestMapping("/personupdate")
-	public ModelAndView personupdate(HttpSession session, Customer customer, CustomerDetail customerDetail) {
+	public ModelAndView personupdate(HttpSession session, Customer customer, CustomerDetail customerDetail, @RequestParam("birthday")String birth) throws ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date birthDate;
+		birthDate = dateFormat.parse(birth);
+		customer.setBirthday(birthDate);
 		Customer customerUser = (Customer) session.getAttribute("customerUser");
 		customer.setId(customerUser.getId());
 		customer.setPassword(customerUser.getPassword());
