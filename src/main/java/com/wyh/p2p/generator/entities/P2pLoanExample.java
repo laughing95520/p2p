@@ -834,6 +834,76 @@ public class P2pLoanExample {
             addCriterion("lending_time not between", value1, value2, "lendingTime");
             return (Criteria) this;
         }
+
+        public Criteria andProcessInstanceIdIsNull() {
+            addCriterion("process_instance_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdIsNotNull() {
+            addCriterion("process_instance_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdEqualTo(String value) {
+            addCriterion("process_instance_id =", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdNotEqualTo(String value) {
+            addCriterion("process_instance_id <>", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdGreaterThan(String value) {
+            addCriterion("process_instance_id >", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdGreaterThanOrEqualTo(String value) {
+            addCriterion("process_instance_id >=", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdLessThan(String value) {
+            addCriterion("process_instance_id <", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdLessThanOrEqualTo(String value) {
+            addCriterion("process_instance_id <=", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdLike(String value) {
+            addCriterion("process_instance_id like", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdNotLike(String value) {
+            addCriterion("process_instance_id not like", value, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdIn(List<String> values) {
+            addCriterion("process_instance_id in", values, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdNotIn(List<String> values) {
+            addCriterion("process_instance_id not in", values, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdBetween(String value1, String value2) {
+            addCriterion("process_instance_id between", value1, value2, "processInstanceId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProcessInstanceIdNotBetween(String value1, String value2) {
+            addCriterion("process_instance_id not between", value1, value2, "processInstanceId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

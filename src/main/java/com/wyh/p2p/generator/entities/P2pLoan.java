@@ -1,8 +1,12 @@
 package com.wyh.p2p.generator.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class P2pLoan {
+public class P2pLoan implements Serializable{
+
+    private static final long serialVersionUID = -4814150619153918089L;
+
     private Integer id;
 
     private Float rate;
@@ -26,6 +30,8 @@ public class P2pLoan {
     private Date loanTime;
 
     private Date lendingTime;
+
+    private String processInstanceId;
 
     public Integer getId() {
         return id;
@@ -121,5 +127,13 @@ public class P2pLoan {
 
     public void setLendingTime(Date lendingTime) {
         this.lendingTime = lendingTime;
+    }
+
+    public String getProcessInstanceId() {
+        return processInstanceId;
+    }
+
+    public void setProcessInstanceId(String processInstanceId) {
+        this.processInstanceId = processInstanceId == null ? null : processInstanceId.trim();
     }
 }

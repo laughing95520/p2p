@@ -193,6 +193,26 @@
             <artifactId>pagehelper</artifactId>
             <version>4.0.0</version>
         </dependency>
+
+
+        <!--activiti工作流 -->
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-engine</artifactId>
+            <version>5.22.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring</artifactId>
+            <version>5.22.0</version>
+        </dependency>
     </dependencies>
 
     <build>

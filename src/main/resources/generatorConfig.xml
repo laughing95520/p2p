@@ -47,7 +47,8 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         <!-- 指定数据库表 -->
-        <table  tableName="p2p_loan">
+        <table  tableName="p2p_loan" domainObjectName="P2pLoan">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
         <table tableName="p2p_guarantee">
         </table>

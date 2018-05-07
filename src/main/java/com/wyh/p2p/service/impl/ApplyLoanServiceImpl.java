@@ -26,9 +26,10 @@ public class ApplyLoanServiceImpl implements ApplyLoanService {
     private P2pLoanMapper p2pLoanMapper;
 
     @Override
-    public boolean insertApply(P2pLoan p2pLoan) {
+    public int insertApply(P2pLoan p2pLoan) {
         try {
-            return p2pLoanMapper.insertSelective(p2pLoan)>0;
+            p2pLoanMapper.insertSelective(p2pLoan);
+            return p2pLoan.getId();
         }catch (Exception e){
             logger.error("insert p2pLoan error"+e);
             throw new RuntimeException("insertApply Error"+e);
@@ -82,6 +83,19 @@ public class ApplyLoanServiceImpl implements ApplyLoanService {
         }catch (Exception e){
             logger.error("根据id查找贷款申请出错，loanId"+loanId+"error:"+e);
             throw new RuntimeException("根据id查找贷款申请出错!loanId"+loanId);
+        }
+    }
+
+    @Override
+    public boolean updateProInsId(int loanId,String proInsId) {
+        try{
+            P2pLoan p2pLoan = new P2pLoan();
+            p2pLoan.setId(loanId);
+            p2pLoan.setProcessInstanceId(proInsId);
+            return p2pLoanMapper.updateByPrimaryKeySelective(p2pLoan) > 0;
+        }catch (Exception e){
+            logger.error("根据id更新贷款申请流程实例id出错，loanId: "+loanId+"proInsId: "+proInsId+"error:"+e);
+            throw new RuntimeException("根据id查找贷款申请出错!loanId: "+loanId+" proInsId: "+proInsId);
         }
     }
 }

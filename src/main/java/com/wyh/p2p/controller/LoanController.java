@@ -12,6 +12,8 @@ import com.wyh.p2p.service.*;
 import com.wyh.p2p.util.CalUtil;
 import com.wyh.p2p.util.ResponseUtil;
 import net.sf.json.JSONObject;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +31,9 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangyihang
@@ -66,6 +70,12 @@ public class LoanController {
 
     @Autowired
     private RepaymentService repaymentService;
+
+    @Autowired
+    private RuntimeService runtimeService;
+
+    @Autowired
+    private TaskService taskService;
 
 
     @RequestMapping("/index")
@@ -229,9 +239,24 @@ public class LoanController {
                     p2pLoan.setInterest(Double.valueOf(interest));
                     p2pLoan.setCustomerId(cusId);
                     p2pLoan.setState((byte) 1);
-                    boolean flag;
-                    flag = applyLoanService.insertApply(p2pLoan);
-                    if (flag) {
+                    int id = applyLoanService.insertApply(p2pLoan);
+                    if (id > 0) {
+                        p2pLoan.setId(id);
+                        Map<String, Object> variables = new HashMap<String, Object>();
+                        variables.put("p2pLoan",p2pLoan);
+                        variables.put("user",customer.getName());
+                        variables.put("admin","admin,ww");
+                        String proInsId = runtimeService.startProcessInstanceByKey("loanApplication",variables)
+                                .getProcessInstanceId();
+
+                        applyLoanService.updateProInsId(id,proInsId);
+
+                        String taskId =taskService.createTaskQuery()
+                                .taskAssignee(customer.getName())
+                                .singleResult().getId();
+
+                        taskService.complete(taskId);
+
                         result.put("success", 0);
                         ResponseUtil.write(response, result);
                     } else {

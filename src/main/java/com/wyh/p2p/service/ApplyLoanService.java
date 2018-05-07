@@ -15,7 +15,7 @@ public interface ApplyLoanService {
      * 添加贷款申请
      * @param p2pLoan
      */
-    boolean insertApply(P2pLoan p2pLoan);
+    int insertApply(P2pLoan p2pLoan);
 
     /**
      * 查看用户贷款信息
@@ -40,4 +40,6 @@ public interface ApplyLoanService {
     boolean changeLoan(int loanId, byte state, String words);
 
     P2pLoan findId(int loanId);
+
+    boolean updateProInsId(int loanId,String proInsId);
 }

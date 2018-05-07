@@ -11,9 +11,10 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">    
-    
-	<!-- 配置数据源 --> 
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+
+	<!-- 配置数据源 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
 		<property name="url" value="jdbc:mysql://localhost:3306/p2p?useUnicode=true&amp;characterEncoding=UTF-8"/>
 		<property name="username" value="root"/>
@@ -57,8 +58,29 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
-	 
-    <!-- 配置事务的通知属性 -->
+
+	<!-- spring负责创建流程引擎的配置文件 -->
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+		<!-- 数据源 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 配置事务管理器，统一事务 -->
+		<property name="transactionManager" ref="transactionManager" />
+		<!-- 设置建表策略，如果没有表，自动创建表 -->
+		<property name="databaseSchemaUpdate" value="true" />
+	</bean>
+	<!-- 创建流程引擎对象 -->
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	</bean>
+
+	<!-- 由流程引擎对象，提供的方法，创建项目中使用的Activiti工作流的Service -->
+	<bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
+	<bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
+	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
+	<bean id="formService" factory-bean="processEngine" factory-method="getFormService" />
+
+	<!-- 配置事务的通知属性 -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
     	<!-- 定义事务的传播行为 -->
     	<tx:attributes>

@@ -14,6 +14,7 @@
     <result column="interest" property="interest" jdbcType="DOUBLE" />
     <result column="loan_time" property="loanTime" jdbcType="TIMESTAMP" />
     <result column="lending_time" property="lendingTime" jdbcType="TIMESTAMP" />
+    <result column="process_instance_id" property="processInstanceId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, rate, loan_month, guarantee_id, money, state, repay_way, words, customer_id, 
-    interest, loan_time, lending_time
+    interest, loan_time, lending_time, process_instance_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wyh.p2p.generator.entities.P2pLoanExample" >
     select
@@ -108,23 +109,26 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.wyh.p2p.generator.entities.P2pLoan" >
-    insert into p2p_loan (id, rate, loan_month, 
-      guarantee_id, money, state, 
-      repay_way, words, customer_id, 
-      interest, loan_time, lending_time
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p2p_loan (rate, loan_month, guarantee_id, 
+      money, state, repay_way, 
+      words, customer_id, interest, 
+      loan_time, lending_time, process_instance_id
       )
-    values (#{id,jdbcType=INTEGER}, #{rate,jdbcType=REAL}, #{loanMonth,jdbcType=INTEGER}, 
-      #{guaranteeId,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, #{state,jdbcType=TINYINT}, 
-      #{repayWay,jdbcType=TINYINT}, #{words,jdbcType=VARCHAR}, #{customerId,jdbcType=INTEGER}, 
-      #{interest,jdbcType=DOUBLE}, #{loanTime,jdbcType=TIMESTAMP}, #{lendingTime,jdbcType=TIMESTAMP}
+    values (#{rate,jdbcType=REAL}, #{loanMonth,jdbcType=INTEGER}, #{guaranteeId,jdbcType=INTEGER}, 
+      #{money,jdbcType=DOUBLE}, #{state,jdbcType=TINYINT}, #{repayWay,jdbcType=TINYINT}, 
+      #{words,jdbcType=VARCHAR}, #{customerId,jdbcType=INTEGER}, #{interest,jdbcType=DOUBLE}, 
+      #{loanTime,jdbcType=TIMESTAMP}, #{lendingTime,jdbcType=TIMESTAMP}, #{processInstanceId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.wyh.p2p.generator.entities.P2pLoan" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into p2p_loan
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="rate != null" >
         rate,
       </if>
@@ -158,11 +162,11 @@
       <if test="lendingTime != null" >
         lending_time,
       </if>
+      <if test="processInstanceId != null" >
+        process_instance_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="rate != null" >
         #{rate,jdbcType=REAL},
       </if>
@@ -195,6 +199,9 @@
       </if>
       <if test="lendingTime != null" >
         #{lendingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="processInstanceId != null" >
+        #{processInstanceId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -243,6 +250,9 @@
       <if test="record.lendingTime != null" >
         lending_time = #{record.lendingTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.processInstanceId != null" >
+        process_instance_id = #{record.processInstanceId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -261,7 +271,8 @@
       customer_id = #{record.customerId,jdbcType=INTEGER},
       interest = #{record.interest,jdbcType=DOUBLE},
       loan_time = #{record.loanTime,jdbcType=TIMESTAMP},
-      lending_time = #{record.lendingTime,jdbcType=TIMESTAMP}
+      lending_time = #{record.lendingTime,jdbcType=TIMESTAMP},
+      process_instance_id = #{record.processInstanceId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -302,6 +313,9 @@
       <if test="lendingTime != null" >
         lending_time = #{lendingTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="processInstanceId != null" >
+        process_instance_id = #{processInstanceId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -317,7 +331,8 @@
       customer_id = #{customerId,jdbcType=INTEGER},
       interest = #{interest,jdbcType=DOUBLE},
       loan_time = #{loanTime,jdbcType=TIMESTAMP},
-      lending_time = #{lendingTime,jdbcType=TIMESTAMP}
+      lending_time = #{lendingTime,jdbcType=TIMESTAMP},
+      process_instance_id = #{processInstanceId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
