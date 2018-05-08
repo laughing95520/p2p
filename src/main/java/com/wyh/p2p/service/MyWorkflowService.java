@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangyihang
@@ -27,4 +28,8 @@ public interface MyWorkflowService {
     List<Task> findTaskListByName(String name);
 
     String findP2pLoanBytid(String taskId);
+
+    ProcessDefinition findProcessDefinitionByTaskId(String taskId);
+
+    Map<String,Object> findCoordingByTask(String taskId);
 }

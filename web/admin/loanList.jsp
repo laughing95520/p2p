@@ -173,7 +173,7 @@
 	<div id="tb">
 		<div>
 			<a href="javascript:checkGuarantee()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">查看贷款担保详情</a>
-			&nbsp;<a href="javascript:edit()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">审批</a>
+			<%--&nbsp;<a href="javascript:edit()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">审批</a>--%>
 		</div>
 
 	</div>

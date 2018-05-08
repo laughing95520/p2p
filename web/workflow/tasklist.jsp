@@ -74,7 +74,6 @@
 									<td>
 			 					<a href="javascript:void(0)" onclick="viewTaskForm('${task.id }')">办理任务</a>
 			 					<a href="javascript:void(0)" onclick="viewCurrentImage('${task.id }')" >查看当前流程图</a>
-
 									</td>
 								</tr>
 								</c:forEach>

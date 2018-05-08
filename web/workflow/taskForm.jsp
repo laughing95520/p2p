@@ -184,45 +184,7 @@
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal -->
 		</div>
-
 		<br>
-		<div class="row">
-			<div class="span12">
-				<c:choose>
-					<c:when test="${commentList!=null && commentList.size()>0 }">
-
-						<div class="table-responsive">
-							<table class="table table-condensed table-striped table-bordered">
-								<thead class="bg-primary">
-									<tr>
-										<th>时间</th>
-										<th>批注人</th>
-										<th>批注信息</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${commentList}" var="dep">
-										<tr>
-
-											<td><fmt:formatDate value="${dep.time }" type="both"
-													pattern="yyyy-MM-dd HH:mm:ss" /></td>
-											<td>${dep.userId }</td>
-											<td>${dep.fullMessage }</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-
-						</div>
-
-					</c:when>
-					<c:otherwise>
-		暂时没有批注信息
-		</c:otherwise>
-				</c:choose>
-
-			</div>
-		</div>
 	</div>
 	<script src="${ctx }/static/js/modules/oa.js"></script>
 </body>

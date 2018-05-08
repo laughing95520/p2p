@@ -17,55 +17,6 @@ function add() {
 	window.location.href = ctx+"/admin/workflow/addDeploy.do";
 }
 
-/**
- * 新增请假单
- */
-function addLeavebill(id)
-{
-	if(id)
-	{
-		window.location.href = ctx + "/leavebill/add?id="+id;
-	}
-	else
-	{
-		window.location.href = ctx + "/leavebill/add";
-	}
-	
-}
-
-/**
- * 显示请假单列表
- */
-function showLeavebill()
-{
-	window.location.href = ctx + "/leavebill/list";
-}
-
-/**
- * 显示请假单列表
- */
-function showLeavebillPage(curPage,pageSize)
-{
-	if(!curPage)
-	{
-		curPage = 1;
-	}
-	if(!pageSize)
-	{
-		pageSize = 10;
-	}
-	window.location.href = ctx + "/leavebill/listPage?pageNum="+curPage+"&pageSize="+pageSize;
-}
-
-
-
-/**
- * 删除请假单
- */
-function deleteLeavebill(id)
-{
-	window.location.href = ctx + "/leavebill/delete?id="+id;
-}
 
 /**
  * 显示流程首页
@@ -109,14 +60,6 @@ function viewImage(deploymentId,imageName)
 }
 
 /**
- * 查看审批历史
- */
-function viewHisComment(id)
-{
-	window.location.href = ctx + "/workflow/viewHisComment?id="+id;
-}
-
-/**
  *办理任务列表
  */
 function listTask()
@@ -138,6 +81,6 @@ function viewTaskForm(id)
  */
 function viewCurrentImage(id)
 {
-	window.location.href = ctx + "/workflow/viewCurrentImage?taskId="+id;
+	window.location.href = ctx + "/admin/workflow/viewCurrentImage.do?taskId="+id;
 }
 
