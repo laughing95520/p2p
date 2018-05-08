@@ -121,7 +121,7 @@ function viewHisComment(id)
  */
 function listTask()
 {
-	window.location.href = ctx + "/workflow/listTask";
+	window.location.href = ctx + "/admin/workflow/listTask.do";
 }
 
 /**
@@ -129,7 +129,7 @@ function listTask()
  */
 function viewTaskForm(id)
 {
-	window.location.href = ctx + "/workflow/viewTaskForm?taskId="+id;
+	window.location.href = ctx + "/admin/workflow/viewTaskForm.do?taskId="+id;
 }
 
 

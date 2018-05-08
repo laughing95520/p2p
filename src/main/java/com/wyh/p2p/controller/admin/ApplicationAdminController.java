@@ -13,6 +13,7 @@ import com.wyh.p2p.util.ResponseUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import org.activiti.engine.TaskService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +51,9 @@ public class ApplicationAdminController {
 
 	@Autowired
 	private RepaymentService repaymentService;
+
+	@Autowired
+	private TaskService taskService;
 
 	@RequestMapping("/listLoan")
 	public void listLoan(@RequestParam("page") String page, @RequestParam("rows") String rows,
@@ -138,6 +142,9 @@ public class ApplicationAdminController {
 		return null;
 	}
 
+
+
+
 	@RequestMapping("/approval")
     @Transactional(rollbackFor = Exception.class)
 	public ModelAndView save(String reason, String approvalStatue, HttpServletResponse response, String id,
@@ -175,7 +182,8 @@ public class ApplicationAdminController {
 			}
 			result.put("success", res);
 			ResponseUtil.write(response, result);
-			return null;
+			mv.setViewName("redirect:/admin/workflow/listTask.do");
+			return mv;
 		}catch (Exception e){
 			logger.error("loan save error:"+e);
 			mv.setViewName("error");

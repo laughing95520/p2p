@@ -242,7 +242,7 @@ public class LoanController {
                     int id = applyLoanService.insertApply(p2pLoan);
                     if (id > 0) {
                         p2pLoan.setId(id);
-                        Map<String, Object> variables = new HashMap<String, Object>();
+                        Map<String, Object> variables = new HashMap<String, Object>(8);
                         variables.put("p2pLoan",p2pLoan);
                         variables.put("user",customer.getName());
                         variables.put("admin","admin,ww");

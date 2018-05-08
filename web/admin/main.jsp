@@ -108,6 +108,8 @@
 			<a href="javascript:openTab('贷款申请','loanList.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">贷款申请</a>
 			<a href="javascript:openTab('还款监督提醒','repayment.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">还款监督提醒</a>
 			<a href="javascript:openTab('贷款利率管理','rateManage.jsp','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px;">贷款利率管理</a>
+
+			<a href="javascript:openTab('审核任务列表','/admin/workflow/listTask.do','icon-review')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-review'" style="width: 150px">审核任务列表</a>
 		</div>
 		<div title="客户信息"  data-options="iconCls:'icon-grxx'" style="padding:10px">
 		    <a href="javascript:openTab('客户基本信息','customer.jsp','icon-grxx')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">客户基本信息</a>

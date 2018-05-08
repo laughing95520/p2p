@@ -42,4 +42,6 @@ public interface ApplyLoanService {
     P2pLoan findId(int loanId);
 
     boolean updateProInsId(int loanId,String proInsId);
+
+    P2pLoan findbyProInsId(String pid);
 }

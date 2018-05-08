@@ -98,4 +98,22 @@ public class ApplyLoanServiceImpl implements ApplyLoanService {
             throw new RuntimeException("根据id查找贷款申请出错!loanId: "+loanId+" proInsId: "+proInsId);
         }
     }
+
+    @Override
+    public P2pLoan findbyProInsId(String pid) {
+        try{
+            P2pLoanExample example = new P2pLoanExample();
+            example.createCriteria().andProcessInstanceIdEqualTo(pid);
+            List<P2pLoan> res = p2pLoanMapper.selectByExample(example);
+            if (res!=null && res.size() ==1){
+                return res.get(0);
+            }else{
+                return null;
+            }
+        }catch (Exception e){
+            logger.error("根据流程实例id 查询贷款信息出错!pid:"+pid+"error: "+e);
+            throw new RuntimeException("根据流程实例id 查询贷款信息出错!pid:"+pid);
+        }
+
+    }
 }

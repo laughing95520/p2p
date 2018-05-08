@@ -2,6 +2,7 @@ package com.wyh.p2p.service;
 
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.task.Task;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -22,4 +23,8 @@ public interface MyWorkflowService {
     InputStream findImageInputStream(String deploymentId, String imageName);
 
     void deleteProcessDefinitionByDeploymentId(String deploymentId);
+
+    List<Task> findTaskListByName(String name);
+
+    String findP2pLoanBytid(String taskId);
 }

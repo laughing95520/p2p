@@ -2,8 +2,10 @@ package com.wyh.p2p.service.impl;
 
 import com.wyh.p2p.service.MyWorkflowService;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.task.Task;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class MyWorkflowServiceImpl implements MyWorkflowService {
 
     @Autowired
     private RepositoryService repositoryService;
+
+    @Autowired
+    private TaskService taskService;
 
     @Override
     public String saveNewDeploye(MultipartFile file) {
@@ -102,6 +107,29 @@ public class MyWorkflowServiceImpl implements MyWorkflowService {
     public void deleteProcessDefinitionByDeploymentId(String deploymentId)
     {
         repositoryService.deleteDeployment(deploymentId, true);
+    }
+
+    /** 2：使用当前用户名查询正在执行的任务表，获取当前任务的集合List<Task> */
+    @Override
+    public List<Task> findTaskListByName(String name)
+    {
+        List<Task> list = taskService.createTaskQuery()
+                .taskCandidateOrAssigned(name)
+                //.taskAssignee(name)// 指定个人任务查询
+                .orderByTaskCreateTime()
+                .asc()//
+                .list();
+        return list;
+    }
+
+
+    /** 根据任务id获取p2p_loan 贷款信息**/
+    @Override
+    public String findP2pLoanBytid(String taskId) {
+
+        String pid = taskService.createTaskQuery()
+                .taskId(taskId).singleResult().getProcessInstanceId();
+        return pid;
     }
 }
 
